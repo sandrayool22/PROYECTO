@@ -1,14 +1,310 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hola Mundo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plataforma Gimnasio — Análisis de Sistemas</title>
+    <!-- Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
-<body class="has-background-light has-text-centered p-6">
-<h1 class="title has-text-primary">¡Hola Mundo!</h1>
-<p class="subtitle has-text-info">Este es un ejemplo simple con Bulma.</p>
-<button class="button is-success">Aceptar</button>
+<body class="has-background-light">
+
+<!-- NAVBAR -->
+<nav class="navbar is-white" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                <strong>Gimnasio • Plataforma</strong>
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
+                <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navMain" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#vision">Visión</a>
+                <a class="navbar-item" href="#actores">Actores</a>
+                <a class="navbar-item" href="#procesos">Procesos</a>
+                <a class="navbar-item" href="#membresias">Membresías</a>
+                <a class="navbar-item" href="#requerimientos">Requerimientos</a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light" id="btnLogin">Iniciar sesión</a>
+                        <a class="button is-primary">Registrarse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero is-primary is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">Plataforma Web/Móvil para Gimnasio</h1>
+            <h2 class="subtitle">Rutinas, nutrición y pagos según tu membresía. Todo en un solo lugar.</h2>
+            <div class="buttons">
+                <a href="#membresias" class="button is-white is-outlined">Ver planes</a>
+                <a href="#procesos" class="button is-link is-inverted is-outlined">Cómo funciona</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VISIÓN -->
+<section id="vision" class="section">
+    <div class="container">
+        <h2 class="title is-3">1. Visión general del sistema</h2>
+        <div class="columns is-variable is-6">
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5">Objetivo</h3>
+                    <p>Digitalizar la gestión de <strong>rutinas, dietas y pagos</strong>, diferenciando beneficios por <strong>tipo de membresía</strong> para aumentar motivación y fidelidad.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-5">Beneficios por plan</h3>
+                    <p><strong>Premium:</strong> rutinas y dietas <em>personalizadas</em> por instructores/nutriólogos (requiere mensualidad al día).</p>
+                    <p><strong>Básico:</strong> acceso a rutinas y dietas <em>estándar</em> + creación de rutinas locales.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ACTORES -->
+<section id="actores" class="section">
+    <div class="container">
+        <h2 class="title is-3">2. Actores principales</h2>
+
+        <div class="columns is-multiline">
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-5">Administrador</p>
+                        <p>Gestiona usuarios, roles, pagos y reportes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-5">Instructor</p>
+                        <p>Crea y asigna rutinas personalizadas (premium).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-5">Nutriólogo</p>
+                        <p>Diseña dietas personalizadas (premium) y menús estándar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card">
+                    <div class="card-content">
+                        <p class="title is-5">Clientes</p>
+                        <p><strong>Premium:</strong> personalización total. <br><strong>Básico:</strong> planes estándar + rutinas locales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- PROCESOS -->
+<section id="procesos" class="section">
+    <div class="container">
+        <h2 class="title is-3">3. Procesos principales</h2>
+        <div class="columns is-multiline">
+            <div class="column is-12 is-6-desktop">
+                <article class="message is-info">
+                    <div class="message-header"><p>Gestión de usuarios y membresías</p></div>
+                    <div class="message-body">
+                        Registro, autenticación, roles (admin/instructor/nutriólogo/cliente) y validación de membresía vigente.
+                    </div>
+                </article>
+                <article class="message is-link">
+                    <div class="message-header"><p>Gestión de rutinas</p></div>
+                    <div class="message-body">
+                        Instructores → rutinas personalizadas (premium). <br>
+                        Básico → rutinas estándar o locales (sin intervención).
+                    </div>
+                </article>
+                <article class="message is-primary">
+                    <div class="message-header"><p>Gestión de nutrición</p></div>
+                    <div class="message-body">
+                        Nutriólogos → dietas personalizadas (premium) y menús estándar (básico).
+                    </div>
+                </article>
+            </div>
+            <div class="column is-12 is-6-desktop">
+                <article class="message is-warning">
+                    <div class="message-header"><p>Pagos y membresías</p></div>
+                    <div class="message-body">
+                        Registro de pagos (manual/en línea). Restricción automática si la mensualidad está vencida.
+                    </div>
+                </article>
+                <article class="message is-success">
+                    <div class="message-header"><p>Seguimiento y progreso</p></div>
+                    <div class="message-body">
+                        Registro de peso, medidas y % de grasa. Gráficos y reportes descargables.
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MEMBRESÍAS (COMPARATIVA) -->
+<section id="membresias" class="section">
+    <div class="container">
+        <h2 class="title is-3">Planes de membresía</h2>
+        <div class="columns is-variable is-6">
+            <div class="column">
+                <div class="box">
+                    <h3 class="title is-4">Básico</h3>
+                    <ul class="content">
+                        <li>Rutinas y dietas estándar.</li>
+                        <li>Crear rutinas locales.</li>
+                        <li>Sin acompañamiento personalizado.</li>
+                    </ul>
+                    <a class="button is-outlined is-link is-fullwidth">Elegir Básico</a>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box has-background-primary-light">
+                    <h3 class="title is-4">Premium</h3>
+                    <ul class="content">
+                        <li>Rutinas personalizadas por instructor.</li>
+                        <li>Dietas personalizadas por nutriólogo.</li>
+                        <li>Reportes y seguimiento avanzado.</li>
+                        <li>Acceso condicionado a pago al día.</li>
+                    </ul>
+                    <a class="button is-primary is-fullwidth">Elegir Premium</a>
+                </div>
+            </div>
+        </div>
+        <p class="has-text-grey">* RB1 y RB2 aplican: el acceso a personalizaciones requiere membresía premium activa.</p>
+    </div>
+</section>
+
+<!-- REQUERIMIENTOS RESUMEN -->
+<section id="requerimientos" class="section">
+    <div class="container">
+        <h2 class="title is-3">Requerimientos (resumen)</h2>
+        <div class="columns is-multiline">
+            <div class="column is-12 is-6-desktop">
+                <div class="box">
+                    <h3 class="title is-5">Funcionales (RF)</h3>
+                    <ul class="content">
+                        <li>RF1: Registro y clasificación por rol/membresía.</li>
+                        <li>RF2–RF3: Accesos diferenciados (premium/básico).</li>
+                        <li>RF4–RF6: Creación/asignación de rutinas y dietas.</li>
+                        <li>RF7: Restricción si membresía vencida.</li>
+                        <li>RF8: Reportes para administrador.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="column is-12 is-6-desktop">
+                <div class="box">
+                    <h3 class="title is-5">No Funcionales (RNF)</h3>
+                    <ul class="content">
+                        <li>RNF1: Web responsiva, escalable a móvil.</li>
+                        <li>RNF2: Autenticación segura (JWT/HTTPS).</li>
+                        <li>RNF3: BD normalizada con integridad.</li>
+                        <li>RNF4: ≥ 300 usuarios concurrentes.</li>
+                        <li>RNF5: Respuesta &lt; 2 segundos.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="notification is-info is-light">
+            <strong>Recordatorios (RB3–RB5):</strong> avisar pago 5 días antes del vencimiento; instructores/nutriólogos solo editan lo que se les asigna.
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+    <div class="container">
+        <div class="box has-text-centered">
+            <h3 class="title is-4">¿Listo para comenzar?</h3>
+            <p>Regístrate y prueba el flujo de registro, asignación de membresía y acceso a contenidos.</p>
+            <div class="buttons is-centered mt-4">
+                <a class="button is-primary">Crear cuenta</a>
+                <a class="button is-light" id="btnLogin2">Ya tengo cuenta</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p><strong>Proyecto Académico — Análisis de Sistemas</strong> · Plataforma de Gimnasio · 2025</p>
+    </div>
+</footer>
+
+<!-- MODAL LOGIN (simple) -->
+<div class="modal" id="loginModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Iniciar sesión</p>
+            <button class="delete" aria-label="close" id="closeLogin"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field">
+                <label class="label">Correo</label>
+                <div class="control">
+                    <input class="input" type="email" placeholder="usuario@correo.com">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Contraseña</label>
+                <div class="control">
+                    <input class="input" type="password" placeholder="••••••••">
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-primary">Entrar</button>
+            <button class="button" id="cancelLogin">Cancelar</button>
+        </footer>
+    </div>
+</div>
+
+<!-- JS mínimo (sin librerías) para navbar y modal -->
+<script>
+    // Navbar burger
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgers = Array.from(document.querySelectorAll('.navbar-burger'));
+        burgers.forEach(b => {
+            b.addEventListener('click', () => {
+                const target = document.getElementById(b.dataset.target);
+                b.classList.toggle('is-active');
+                target.classList.toggle('is-active');
+            });
+        });
+    });
+
+    // Modal Login
+    const loginModal = document.getElementById('loginModal');
+    const openBtns = [document.getElementById('btnLogin'), document.getElementById('btnLogin2')].filter(Boolean);
+    const closeBtns = [document.getElementById('closeLogin'), document.getElementById('cancelLogin')].filter(Boolean);
+
+    openBtns.forEach(btn => btn.addEventListener('click', () => loginModal.classList.add('is-active')));
+    closeBtns.forEach(btn => btn.addEventListener('click', () => loginModal.classList.remove('is-active')));
+    document.querySelector('#loginModal .modal-background').addEventListener('click', () => loginModal.classList.remove('is-active'));
+</script>
 </body>
 </html>
