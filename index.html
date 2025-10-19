@@ -1,12 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>hello worl</title>
-
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hola Mundo con Bulma</title>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <style>
+        body { min-height: 100vh; }
+        /* toque suave de color de fondo (no sustituye Bulma; solo suma) */
+        .fondo {
+            background: linear-gradient(135deg, #f5f7ff 0%, #f0fff4 50%, #fff5f7 100%);
+        }
+    </style>
 </head>
-<body>
-<h1>HOLAAA PRUEBA</h1>
+<body class="fondo">
+<!-- Hero principal con color -->
+<section class="hero is-primary is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">¡Hola, Mundo!</h1>
+            <h2 class="subtitle">Colores rápidos usando <strong>Bulma</strong></h2>
+        </div>
+    </div>
+</section>
+
+<!-- Contenido de demostración de colores -->
+<section class="section">
+    <div class="container content">
+        <h3 class="title is-4">Titulares con helpers</h3>
+        <p class="has-text-link">Texto en color <strong>link</strong></p>
+        <p class="has-text-success">Texto en color <strong>success</strong></p>
+        <p class="has-text-danger">Texto en color <strong>danger</strong></p>
+        <p class="has-text-warning">Texto en color <strong>warning</strong></p>
+        <p class="has-text-info">Texto en color <strong>info</strong></p>
+
+        <hr>
+
+        <h3 class="title is-4">Bloques y notificaciones</h3>
+        <div class="notification is-link">Notificación <strong>is-link</strong></div>
+        <div class="notification is-success">Notificación <strong>is-success</strong></div>
+        <div class="notification is-danger">Notificación <strong>is-danger</strong></div>
+
+        <hr>
+
+        <h3 class="title is-4">Botones de colores</h3>
+        <div class="buttons">
+            <button class="button is-primary">Primario</button>
+            <button class="button is-link">Link</button>
+            <button class="button is-info">Info</button>
+            <button class="button is-success">Éxito</button>
+            <button class="button is-warning">Alerta</button>
+            <button class="button is-danger">Peligro</button>
+        </div>
+
+        <hr>
+
+        <h3 class="title is-4">Tarjetas con fondos</h3>
+        <div class="columns is-multiline">
+            <div class="column is-4">
+                <div class="card has-background-link-light">
+                    <div class="card-content">
+                        <p class="title is-5">Link light</p>
+                        <p class="subtitle is-6">has-background-link-light</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="card has-background-success-light">
+                    <div class="card-content">
+                        <p class="title is-5">Success light</p>
+                        <p class="subtitle is-6">has-background-success-light</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="card has-background-danger-light">
+                    <div class="card-content">
+                        <p class="title is-5">Danger light</p>
+                        <p class="subtitle is-6">has-background-danger-light</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer simple -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Hecho con ❤️ y <a href="https://bulma.io" target="_blank" rel="noopener noreferrer">Bulma</a>.</p>
+    </div>
+</footer>
 </body>
 </html>
