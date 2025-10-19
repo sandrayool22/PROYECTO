@@ -6,6 +6,34 @@
     <title>Plataforma Gimnasio — Análisis de Sistemas</title>
     <!-- Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        /* Paleta llamativa y formal: azul profundo + dorado */
+        :root{
+            --brand-primary:#0f2743;   /* azul petróleo */
+            --brand-primary-strong:#0a1b2f;
+            --brand-accent:#d4a017;    /* dorado */
+            --brand-accent-weak:#f9e7b5;
+        }
+        .navbar, .footer { background: #ffffff; }
+        .navbar .navbar-item strong { color: var(--brand-primary); }
+        .hero.is-primary {
+            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-strong) 100%);
+        }
+        .hero.is-primary .title, .hero.is-primary .subtitle { color: #fff; }
+        .button.is-primary { background: var(--brand-accent); border-color: var(--brand-accent); color:#1a1a1a; }
+        .button.is-primary:hover { filter: brightness(0.95); }
+        .is-outline-accent { background: transparent; border: 2px solid var(--brand-accent); color: var(--brand-accent); }
+        .is-outline-accent:hover { background: var(--brand-accent); color:#1a1a1a; }
+        .tag.is-accent { background: var(--brand-accent); color:#1a1a1a; }
+        .box.highlight { border-top: 4px solid var(--brand-accent); }
+        /* Cards de equipo */
+        .team-card .avatar {
+            width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px;
+            border: 3px solid var(--brand-accent);
+        }
+        .team-card .role { color: var(--brand-primary); font-weight: 600; }
+        .has-accent-underline { border-bottom: 3px solid var(--brand-accent); display:inline-block; padding-bottom: 4px; }
+    </style>
 </head>
 <body class="has-background-light">
 
@@ -13,9 +41,7 @@
 <nav class="navbar is-white" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item" href="#">
-                <strong>Gimnasio • Plataforma</strong>
-            </a>
+            <a class="navbar-item" href="#"><strong>Gimnasio • Plataforma</strong></a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
                 <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
             </a>
@@ -24,10 +50,8 @@
         <div id="navMain" class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item" href="#vision">Visión</a>
-                <a class="navbar-item" href="#actores">Actores</a>
-                <a class="navbar-item" href="#procesos">Procesos</a>
+                <a class="navbar-item" href="#equipo">Conoce nuestro equipo</a>
                 <a class="navbar-item" href="#membresias">Membresías</a>
-                <a class="navbar-item" href="#requerimientos">Requerimientos</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -45,129 +69,125 @@
 <section class="hero is-primary is-bold">
     <div class="hero-body">
         <div class="container">
-            <h1 class="title">Plataforma Web/Móvil para Gimnasio</h1>
-            <h2 class="subtitle">Rutinas, nutrición y pagos según tu membresía. Todo en un solo lugar.</h2>
+            <span class="tag is-accent is-medium mb-3">Gimnasio</span>
+            <h1 class="title">Entrena con propósito. Progresa con datos.</h1>
+            <h2 class="subtitle">Rutinas, nutrición y pagos en una sola plataforma. Tu disciplina, nuestro acompañamiento.</h2>
             <div class="buttons">
-                <a href="#membresias" class="button is-white is-outlined">Ver planes</a>
-                <a href="#procesos" class="button is-link is-inverted is-outlined">Cómo funciona</a>
+                <a href="#membresias" class="button is-primary">Ver planes</a>
+                <a href="#equipo" class="button is-white is-outlined">Conocer al equipo</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- VISIÓN -->
+<!-- VISIÓN (del gimnasio) -->
 <section id="vision" class="section">
     <div class="container">
-        <h2 class="title is-3">1. Visión general del sistema</h2>
+        <h2 class="title is-3 has-accent-underline">1. Nuestra visión</h2>
         <div class="columns is-variable is-6">
             <div class="column">
-                <div class="box">
-                    <h3 class="title is-5">Objetivo</h3>
-                    <p>Digitalizar la gestión de <strong>rutinas, dietas y pagos</strong>, diferenciando beneficios por <strong>tipo de membresía</strong> para aumentar motivación y fidelidad.</p>
+                <div class="box highlight">
+                    <h3 class="title is-5">Salud sostenible</h3>
+                    <p>Ser el gimnasio de referencia que impulsa <strong>hábitos consistentes</strong>, priorizando técnica, seguridad y constancia por encima de la moda pasajera.</p>
                 </div>
             </div>
             <div class="column">
-                <div class="box">
-                    <h3 class="title is-5">Beneficios por plan</h3>
-                    <p><strong>Premium:</strong> rutinas y dietas <em>personalizadas</em> por instructores/nutriólogos (requiere mensualidad al día).</p>
-                    <p><strong>Básico:</strong> acceso a rutinas y dietas <em>estándar</em> + creación de rutinas locales.</p>
+                <div class="box highlight">
+                    <h3 class="title is-5">Acompañamiento real</h3>
+                    <p>Guiarte con <strong>entrenadores y nutriólogos certificados</strong>, usando datos de tu progreso para personalizar el camino hacia tus metas.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box highlight">
+                    <h3 class="title is-5">Comunidad</h3>
+                    <p>Construir una comunidad que te motive a <strong>volver mañana</strong>, porque el éxito es acumulativo: día a día, sesión a sesión.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ACTORES -->
-<section id="actores" class="section">
+<!-- EQUIPO -->
+<section id="equipo" class="section">
     <div class="container">
-        <h2 class="title is-3">2. Actores principales</h2>
+        <h2 class="title is-3 has-accent-underline">2. Conoce nuestro equipo</h2>
+        <p class="subtitle">Personas reales, enfoque profesional y resultados medibles.</p>
 
         <div class="columns is-multiline">
+            <!-- Gerencia / Administrador -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card">
+                <div class="card team-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <!-- Puedes reemplazar estas fotos libres por las de tu equipo -->
+                            <img class="avatar" src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?q=80&w=800&auto=format&fit=crop" alt="Gerencia del gimnasio">
+                        </figure>
+                    </div>
                     <div class="card-content">
-                        <p class="title is-5">Administrador</p>
-                        <p>Gestiona usuarios, roles, pagos y reportes.</p>
+                        <p class="role">Gerencia</p>
+                        <p class="title is-5 mb-2">Coordinación & Membresías</p>
+                        <p>Gestiona usuarios, pagos y reportes. Mantiene la operación fluida y tu acceso al día.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Instructores -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card">
+                <div class="card team-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" alt="Instructores">
+                        </figure>
+                    </div>
                     <div class="card-content">
-                        <p class="title is-5">Instructor</p>
-                        <p>Crea y asigna rutinas personalizadas (premium).</p>
+                        <p class="role">Instructores</p>
+                        <p class="title is-5 mb-2">Técnica & Progresión</p>
+                        <p>Diseñan y ajustan rutinas seguras y efectivas. Tu plan evoluciona contigo.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Nutriólogos -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card">
+                <div class="card team-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.unsplash.com/photo-1542736667-069246bdbc94?q=80&w=800&auto=format&fit=crop" alt="Nutriólogos">
+                        </figure>
+                    </div>
                     <div class="card-content">
-                        <p class="title is-5">Nutriólogo</p>
-                        <p>Diseña dietas personalizadas (premium) y menús estándar.</p>
+                        <p class="role">Nutriólogos</p>
+                        <p class="title is-5 mb-2">Estrategia alimentaria</p>
+                        <p>Planes que encajan con tu rutina y presupuesto. Comer bien también se entrena.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Atención al cliente -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card">
+                <div class="card team-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop" alt="Atención al cliente">
+                        </figure>
+                    </div>
                     <div class="card-content">
-                        <p class="title is-5">Clientes</p>
-                        <p><strong>Premium:</strong> personalización total. <br><strong>Básico:</strong> planes estándar + rutinas locales.</p>
+                        <p class="role">Atención al cliente</p>
+                        <p class="title is-5 mb-2">Soporte & Comunidad</p>
+                        <p>Te ayudamos con accesos, horarios y dudas. Queremos verte lograrlo.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
-</section>
-
-<!-- PROCESOS -->
-<section id="procesos" class="section">
-    <div class="container">
-        <h2 class="title is-3">3. Procesos principales</h2>
-        <div class="columns is-multiline">
-            <div class="column is-12 is-6-desktop">
-                <article class="message is-info">
-                    <div class="message-header"><p>Gestión de usuarios y membresías</p></div>
-                    <div class="message-body">
-                        Registro, autenticación, roles (admin/instructor/nutriólogo/cliente) y validación de membresía vigente.
-                    </div>
-                </article>
-                <article class="message is-link">
-                    <div class="message-header"><p>Gestión de rutinas</p></div>
-                    <div class="message-body">
-                        Instructores → rutinas personalizadas (premium). <br>
-                        Básico → rutinas estándar o locales (sin intervención).
-                    </div>
-                </article>
-                <article class="message is-primary">
-                    <div class="message-header"><p>Gestión de nutrición</p></div>
-                    <div class="message-body">
-                        Nutriólogos → dietas personalizadas (premium) y menús estándar (básico).
-                    </div>
-                </article>
-            </div>
-            <div class="column is-12 is-6-desktop">
-                <article class="message is-warning">
-                    <div class="message-header"><p>Pagos y membresías</p></div>
-                    <div class="message-body">
-                        Registro de pagos (manual/en línea). Restricción automática si la mensualidad está vencida.
-                    </div>
-                </article>
-                <article class="message is-success">
-                    <div class="message-header"><p>Seguimiento y progreso</p></div>
-                    <div class="message-body">
-                        Registro de peso, medidas y % de grasa. Gráficos y reportes descargables.
-                    </div>
-                </article>
-            </div>
-        </div>
+        <p class="has-text-grey is-size-7 mt-2">* Reemplaza las fotos por imágenes de tu equipo si lo deseas.</p>
     </div>
 </section>
 
 <!-- MEMBRESÍAS (COMPARATIVA) -->
 <section id="membresias" class="section">
     <div class="container">
-        <h2 class="title is-3">Planes de membresía</h2>
+        <h2 class="title is-3 has-accent-underline">3. Planes de membresía</h2>
         <div class="columns is-variable is-6">
             <div class="column">
                 <div class="box">
@@ -175,61 +195,25 @@
                     <ul class="content">
                         <li>Rutinas y dietas estándar.</li>
                         <li>Crear rutinas locales.</li>
-                        <li>Sin acompañamiento personalizado.</li>
+                        <li>Soporte esencial.</li>
                     </ul>
-                    <a class="button is-outlined is-link is-fullwidth">Elegir Básico</a>
+                    <a class="button is-outline-accent is-fullwidth">Elegir Básico</a>
                 </div>
             </div>
             <div class="column">
-                <div class="box has-background-primary-light">
-                    <h3 class="title is-4">Premium</h3>
+                <div class="box has-background-light highlight">
+                    <h3 class="title is-4">El Gran Machote</h3>
                     <ul class="content">
                         <li>Rutinas personalizadas por instructor.</li>
                         <li>Dietas personalizadas por nutriólogo.</li>
                         <li>Reportes y seguimiento avanzado.</li>
                         <li>Acceso condicionado a pago al día.</li>
                     </ul>
-                    <a class="button is-primary is-fullwidth">Elegir Premium</a>
+                    <a class="button is-primary is-fullwidth">Elegir El Gran Machote</a>
                 </div>
             </div>
         </div>
-        <p class="has-text-grey">* RB1 y RB2 aplican: el acceso a personalizaciones requiere membresía premium activa.</p>
-    </div>
-</section>
-
-<!-- REQUERIMIENTOS RESUMEN -->
-<section id="requerimientos" class="section">
-    <div class="container">
-        <h2 class="title is-3">Requerimientos (resumen)</h2>
-        <div class="columns is-multiline">
-            <div class="column is-12 is-6-desktop">
-                <div class="box">
-                    <h3 class="title is-5">Funcionales (RF)</h3>
-                    <ul class="content">
-                        <li>RF1: Registro y clasificación por rol/membresía.</li>
-                        <li>RF2–RF3: Accesos diferenciados (premium/básico).</li>
-                        <li>RF4–RF6: Creación/asignación de rutinas y dietas.</li>
-                        <li>RF7: Restricción si membresía vencida.</li>
-                        <li>RF8: Reportes para administrador.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="column is-12 is-6-desktop">
-                <div class="box">
-                    <h3 class="title is-5">No Funcionales (RNF)</h3>
-                    <ul class="content">
-                        <li>RNF1: Web responsiva, escalable a móvil.</li>
-                        <li>RNF2: Autenticación segura (JWT/HTTPS).</li>
-                        <li>RNF3: BD normalizada con integridad.</li>
-                        <li>RNF4: ≥ 300 usuarios concurrentes.</li>
-                        <li>RNF5: Respuesta &lt; 2 segundos.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="notification is-info is-light">
-            <strong>Recordatorios (RB3–RB5):</strong> avisar pago 5 días antes del vencimiento; instructores/nutriólogos solo editan lo que se les asigna.
-        </div>
+        <p class="has-text-grey is-size-7">* Puedes renombrar o ajustar beneficios según tu operativa real.</p>
     </div>
 </section>
 
