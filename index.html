@@ -362,25 +362,22 @@
         elEstado.style.display = 'block';
         elEstado.className = 'notification is-info is-light';
         elEstado.textContent = 'Consultando API…';
-
         try{
-            const resp = await fetch('https://www.boredapi.com/api/activity');
-            if(!resp.ok) throw new Error('Respuesta no válida');
+            const resp = await fetch('https://api.adviceslip.com/advice');
             const data = await resp.json();
-
-            elAct.textContent   = data.activity || '—';
-            elTipo.textContent  = data.type || '—';
-            elPart.textContent  = data.participants ?? '—';
-            elCosto.textContent = precioTexto(data.price ?? 0);
-
+            elAct.textContent   = data.slip.advice;
+            elTipo.textContent  = 'Consejo';
+            elPart.textContent  = '1';
+            elCosto.textContent = 'Gratis';
             elEstado.className = 'notification is-success is-light';
             elEstado.textContent = 'Listo: datos recibidos.';
             setTimeout(() => elEstado.style.display='none', 1500);
         }catch(err){
             elEstado.className = 'notification is-danger is-light';
-            elEstado.textContent = 'Error al consultar la API. Reintenta.';
+            elEstado.textContent = 'Error al consultar la API.';
         }
     }
+
 
     btnRecargar.addEventListener('click', cargarActividad);
     // cargar al entrar
