@@ -362,21 +362,31 @@
         elEstado.style.display = 'block';
         elEstado.className = 'notification is-info is-light';
         elEstado.textContent = 'Consultando API…';
-        try{
+        try {
+            // 1. Obtener frase en inglés
             const resp = await fetch('https://api.adviceslip.com/advice');
             const data = await resp.json();
-            elAct.textContent   = data.slip.advice;
-            elTipo.textContent  = 'Consejo';
+            const frase = data.slip.advice;
+
+            // 2. Traducir al español
+            const trad = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(frase)}&langpair=en|es`);
+            const tData = await trad.json();
+            const fraseEs = tData.responseData.translatedText || frase;
+
+            // Mostrar resultado
+            elAct.textContent   = fraseEs;
+            elTipo.textContent  = 'Consejo (traducido)';
             elPart.textContent  = '1';
             elCosto.textContent = 'Gratis';
             elEstado.className = 'notification is-success is-light';
             elEstado.textContent = 'Listo: datos recibidos.';
             setTimeout(() => elEstado.style.display='none', 1500);
-        }catch(err){
+        } catch (err) {
             elEstado.className = 'notification is-danger is-light';
             elEstado.textContent = 'Error al consultar la API.';
         }
     }
+
 
 
     btnRecargar.addEventListener('click', cargarActividad);
