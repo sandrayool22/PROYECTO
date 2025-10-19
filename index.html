@@ -3,42 +3,64 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Plataforma Gimnasio — Análisis de Sistemas</title>
+    <title>Gimnasio — Plataforma</title>
     <!-- Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        /* Paleta llamativa y formal: azul profundo + dorado */
+        /* Paleta (mayormente blanco) */
         :root{
-            --brand-primary:#0f2743;   /* azul petróleo */
-            --brand-primary-strong:#0a1b2f;
-            --brand-accent:#d4a017;    /* dorado */
-            --brand-accent-weak:#f9e7b5;
+            --c-deep-purple:#4a2040; /* morado oscuro */
+            --c-burgundy:#7d1233;     /* burdeos */
+            --c-crimson:#c10f45;      /* rojo fuerte */
+            --c-orange:#ff5a3c;       /* naranja vivo */
+            --c-yellow:#ffc107;       /* amarillo */
+            --c-ink:#1f1f1f;
         }
-        .navbar, .footer { background: #ffffff; }
-        .navbar .navbar-item strong { color: var(--brand-primary); }
-        .hero.is-primary {
-            background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-strong) 100%);
+        html, body { background:#fff; color:var(--c-ink); }
+        .navbar, .footer { background:#fff; }
+        .navbar .navbar-item strong { color:var(--c-deep-purple); }
+
+        /* Hero con acentos sutiles y fondo blanco */
+        .hero--clean {
+            background: linear-gradient(0deg, rgba(255,90,60,0.06), rgba(255,90,60,0.06));
+            border-bottom: 4px solid var(--c-yellow);
         }
-        .hero.is-primary .title, .hero.is-primary .subtitle { color: #fff; }
-        .button.is-primary { background: var(--brand-accent); border-color: var(--brand-accent); color:#1a1a1a; }
+        .hero--clean .title { color: var(--c-deep-purple); }
+        .hero--clean .subtitle { color:#5a5a5a; }
+
+        /* Botones */
+        .button.is-primary { background: var(--c-yellow); border-color: var(--c-yellow); color:#1a1a1a; }
         .button.is-primary:hover { filter: brightness(0.95); }
-        .is-outline-accent { background: transparent; border: 2px solid var(--brand-accent); color: var(--brand-accent); }
-        .is-outline-accent:hover { background: var(--brand-accent); color:#1a1a1a; }
-        .tag.is-accent { background: var(--brand-accent); color:#1a1a1a; }
-        .box.highlight { border-top: 4px solid var(--brand-accent); }
-        /* Cards de equipo */
+        .button.is-accent { background: var(--c-orange); border-color: var(--c-orange); color:#fff; }
+        .button.is-accent:hover { filter: brightness(0.95); }
+        .button.is-outline-burgundy { background: transparent; border:2px solid var(--c-burgundy); color: var(--c-burgundy); }
+        .button.is-outline-burgundy:hover { background: var(--c-burgundy); color:#fff; }
+
+        /* Titulares con subrayado de color */
+        .has-accent-underline { border-bottom: 3px solid var(--c-yellow); display:inline-block; padding-bottom:4px; }
+
+        /* Cajas y tarjetas */
+        .box { border:1px solid #ececec; }
+        .box.highlight { border-top:4px solid var(--c-orange); }
+        .plan-featured { border:1px solid var(--c-orange); box-shadow:0 8px 22px rgba(0,0,0,0.06); }
+
+        /* Equipo */
         .team-card .avatar {
-            width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px;
-            border: 3px solid var(--brand-accent);
+            width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;
+            border:3px solid var(--c-yellow);
         }
-        .team-card .role { color: var(--brand-primary); font-weight: 600; }
-        .has-accent-underline { border-bottom: 3px solid var(--brand-accent); display:inline-block; padding-bottom: 4px; }
+        .team-card .role { color: var(--c-burgundy); font-weight:700; }
+
+        /* Etiquetas de color sutiles */
+        .tag.is-crimson { background: var(--c-crimson); color:#fff; }
+        .tag.is-orange { background: var(--c-orange); color:#fff; }
+        .tag.is-yellow { background: var(--c-yellow); color:#1a1a1a; }
     </style>
 </head>
-<body class="has-background-light">
+<body>
 
 <!-- NAVBAR -->
-<nav class="navbar is-white" role="navigation" aria-label="main navigation">
+<nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item" href="#"><strong>Gimnasio • Plataforma</strong></a>
@@ -46,7 +68,6 @@
                 <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
             </a>
         </div>
-
         <div id="navMain" class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item" href="#vision">Visión</a>
@@ -65,16 +86,20 @@
     </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero is-primary is-bold">
+<!-- HERO (blanco + acentos) -->
+<section class="hero hero--clean">
     <div class="hero-body">
         <div class="container">
-            <span class="tag is-accent is-medium mb-3">Gimnasio</span>
+            <div class="tags mb-2">
+                <span class="tag is-yellow">Salud</span>
+                <span class="tag is-orange">Entrenamiento</span>
+                <span class="tag is-crimson">Nutrición</span>
+            </div>
             <h1 class="title">Entrena con propósito. Progresa con datos.</h1>
-            <h2 class="subtitle">Rutinas, nutrición y pagos en una sola plataforma. Tu disciplina, nuestro acompañamiento.</h2>
+            <h2 class="subtitle">Rutinas, nutrición y pagos en una sola plataforma. Profesional, claro y eficaz.</h2>
             <div class="buttons">
                 <a href="#membresias" class="button is-primary">Ver planes</a>
-                <a href="#equipo" class="button is-white is-outlined">Conocer al equipo</a>
+                <a href="#equipo" class="button is-outline-burgundy">Conocer al equipo</a>
             </div>
         </div>
     </div>
@@ -88,19 +113,19 @@
             <div class="column">
                 <div class="box highlight">
                     <h3 class="title is-5">Salud sostenible</h3>
-                    <p>Ser el gimnasio de referencia que impulsa <strong>hábitos consistentes</strong>, priorizando técnica, seguridad y constancia por encima de la moda pasajera.</p>
+                    <p>Ser el gimnasio de referencia que impulsa <strong>hábitos consistentes</strong> priorizando técnica, seguridad y constancia.</p>
                 </div>
             </div>
             <div class="column">
                 <div class="box highlight">
                     <h3 class="title is-5">Acompañamiento real</h3>
-                    <p>Guiarte con <strong>entrenadores y nutriólogos certificados</strong>, usando datos de tu progreso para personalizar el camino hacia tus metas.</p>
+                    <p>Guiarte con <strong>entrenadores y nutriólogos certificados</strong>, usando datos de progreso para personalizar tu camino.</p>
                 </div>
             </div>
             <div class="column">
                 <div class="box highlight">
                     <h3 class="title is-5">Comunidad</h3>
-                    <p>Construir una comunidad que te motive a <strong>volver mañana</strong>, porque el éxito es acumulativo: día a día, sesión a sesión.</p>
+                    <p>Construir una comunidad que te motive a <strong>volver mañana</strong>. El éxito es acumulativo: sesión a sesión.</p>
                 </div>
             </div>
         </div>
@@ -114,29 +139,12 @@
         <p class="subtitle">Personas reales, enfoque profesional y resultados medibles.</p>
 
         <div class="columns is-multiline">
-            <!-- Gerencia / Administrador -->
-            <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card team-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <!-- Puedes reemplazar estas fotos libres por las de tu equipo -->
-                            <img class="avatar" src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?q=80&w=800&auto=format&fit=crop" alt="Gerencia del gimnasio">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="role">Gerencia</p>
-                        <p class="title is-5 mb-2">Coordinación & Membresías</p>
-                        <p>Gestiona usuarios, pagos y reportes. Mantiene la operación fluida y tu acceso al día.</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Instructores -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
                 <div class="card team-card">
                     <div class="card-image">
                         <figure class="image">
-                            <img class="avatar" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" alt="Instructores">
+                            <img class="avatar" src="https://thumbs.dreamstime.com/b/cliente-de-motivaci%C3%B3n-del-instructor-del-gimnasio-47295799.jpg" alt="Instructores">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -147,44 +155,60 @@
                 </div>
             </div>
 
-            <!-- Nutriólogos -->
+            <!-- Coordinación -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
                 <div class="card team-card">
                     <div class="card-image">
                         <figure class="image">
-                            <img class="avatar" src="https://images.unsplash.com/photo-1542736667-069246bdbc94?q=80&w=800&auto=format&fit=crop" alt="Nutriólogos">
+                            <img class="avatar" src="https://hectortena.com.pe/wp-content/uploads/2023/04/depositphotos_10678232-stock-photo-gym-manager-greeting-customer.webp" alt="Coordinación / Gerencia">
                         </figure>
                     </div>
                     <div class="card-content">
-                        <p class="role">Nutriólogos</p>
+                        <p class="role">Coordinación</p>
+                        <p class="title is-5 mb-2">Membresías & Operación</p>
+                        <p>Gestiona usuarios, pagos y reportes. Mantiene tu acceso al día.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutricionista -->
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card team-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://287524.fs1.hubspotusercontent-na1.net/hub/287524/hubfs/Blog_Contenido/WA/nutricion-deportiva-que-es-y-por-que-estudiar-esta-maestria.jpg?width=800&name=nutricion-deportiva-que-es-y-por-que-estudiar-esta-maestria.jpg" alt="Nutricionista">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="role">Nutrición</p>
                         <p class="title is-5 mb-2">Estrategia alimentaria</p>
                         <p>Planes que encajan con tu rutina y presupuesto. Comer bien también se entrena.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Atención al cliente -->
+            <!-- Soporte y comunidad -->
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
                 <div class="card team-card">
                     <div class="card-image">
                         <figure class="image">
-                            <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop" alt="Atención al cliente">
+                            <img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPrWQjMirpD4U6XzFSqbEe6nUdi8CJZP-WtQ&s" alt="Soporte y comunidad">
                         </figure>
                     </div>
                     <div class="card-content">
-                        <p class="role">Atención al cliente</p>
-                        <p class="title is-5 mb-2">Soporte & Comunidad</p>
+                        <p class="role">Soporte & Comunidad</p>
+                        <p class="title is-5 mb-2">Acompañamiento</p>
                         <p>Te ayudamos con accesos, horarios y dudas. Queremos verte lograrlo.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <p class="has-text-grey is-size-7 mt-2">* Reemplaza las fotos por imágenes de tu equipo si lo deseas.</p>
+        <p class="has-text-grey is-size-7 mt-2">* Imágenes de referencia provistas por ti. Puedes reemplazarlas por fotos propias.</p>
     </div>
 </section>
 
-<!-- MEMBRESÍAS (COMPARATIVA) -->
+<!-- MEMBRESÍAS -->
 <section id="membresias" class="section">
     <div class="container">
         <h2 class="title is-3 has-accent-underline">3. Planes de membresía</h2>
@@ -197,11 +221,11 @@
                         <li>Crear rutinas locales.</li>
                         <li>Soporte esencial.</li>
                     </ul>
-                    <a class="button is-outline-accent is-fullwidth">Elegir Básico</a>
+                    <a class="button is-outline-burgundy is-fullwidth">Elegir Básico</a>
                 </div>
             </div>
             <div class="column">
-                <div class="box has-background-light highlight">
+                <div class="box plan-featured">
                     <h3 class="title is-4">El Gran Machote</h3>
                     <ul class="content">
                         <li>Rutinas personalizadas por instructor.</li>
@@ -209,11 +233,11 @@
                         <li>Reportes y seguimiento avanzado.</li>
                         <li>Acceso condicionado a pago al día.</li>
                     </ul>
-                    <a class="button is-primary is-fullwidth">Elegir El Gran Machote</a>
+                    <a class="button is-accent is-fullwidth">Elegir El Gran Machote</a>
                 </div>
             </div>
         </div>
-        <p class="has-text-grey is-size-7">* Puedes renombrar o ajustar beneficios según tu operativa real.</p>
+        <p class="has-text-grey is-size-7">* Ajusta beneficios y nombres según tu operación real.</p>
     </div>
 </section>
 
@@ -222,7 +246,7 @@
     <div class="container">
         <div class="box has-text-centered">
             <h3 class="title is-4">¿Listo para comenzar?</h3>
-            <p>Regístrate y prueba el flujo de registro, asignación de membresía y acceso a contenidos.</p>
+            <p>Regístrate y prueba el flujo de registro y acceso a contenidos.</p>
             <div class="buttons is-centered mt-4">
                 <a class="button is-primary">Crear cuenta</a>
                 <a class="button is-light" id="btnLogin2">Ya tengo cuenta</a>
@@ -234,11 +258,11 @@
 <!-- FOOTER -->
 <footer class="footer">
     <div class="content has-text-centered">
-        <p><strong>Proyecto Académico — Análisis de Sistemas</strong> · Plataforma de Gimnasio · 2025</p>
+        <p><strong>Proyecto Académico — Plataforma de Gimnasio</strong> · 2025</p>
     </div>
 </footer>
 
-<!-- MODAL LOGIN (simple) -->
+<!-- MODAL LOGIN -->
 <div class="modal" id="loginModal">
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -267,7 +291,7 @@
     </div>
 </div>
 
-<!-- JS mínimo (sin librerías) para navbar y modal -->
+<!-- JS mínimo -->
 <script>
     // Navbar burger
     document.addEventListener('DOMContentLoaded', () => {
@@ -285,7 +309,6 @@
     const loginModal = document.getElementById('loginModal');
     const openBtns = [document.getElementById('btnLogin'), document.getElementById('btnLogin2')].filter(Boolean);
     const closeBtns = [document.getElementById('closeLogin'), document.getElementById('cancelLogin')].filter(Boolean);
-
     openBtns.forEach(btn => btn.addEventListener('click', () => loginModal.classList.add('is-active')));
     closeBtns.forEach(btn => btn.addEventListener('click', () => loginModal.classList.remove('is-active')));
     document.querySelector('#loginModal .modal-background').addEventListener('click', () => loginModal.classList.remove('is-active'));
