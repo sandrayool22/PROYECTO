@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rutinas y Dietas — Plataforma Gimnasio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        /* Paleta (mayormente blanco) — tu esquema morado/burdeo/rojo/naranja/amarillo */
+        :root{
+            --c-deep-purple:#4a2040;
+            --c-burgundy:#7d1233;
+            --c-crimson:#c10f45;
+            --c-orange:#ff5a3c;
+            --c-yellow:#ffc107;
+            --c-ink:#1f1f1f;
+        }
+        html, body { background:#fff; color:var(--c-ink); }
+        .navbar, .footer { background:#fff; }
+        .navbar .navbar-item strong { color:var(--c-deep-purple); }
+        .has-accent-underline { border-bottom: 3px solid var(--c-yellow); display:inline-block; padding-bottom:4px; }
+        .button.is-primary { background: var(--c-yellow); border-color: var(--c-yellow); color:#1a1a1a; }
+        .button.is-primary:hover { filter: brightness(0.95); }
+        .button.is-accent { background: var(--c-orange); border-color: var(--c-orange); color:#fff; }
+        .button.is-accent:hover { filter: brightness(0.95); }
+        .button.is-outline-burgundy { background: transparent; border:2px solid var(--c-burgundy); color: var(--c-burgundy); }
+        .button.is-outline-burgundy:hover { background: var(--c-burgundy); color:#fff; }
+        .tag.is-crimson { background: var(--c-crimson); color:#fff; }
+        .tag.is-orange  { background: var(--c-orange); color:#fff; }
+        .tag.is-yellow  { background: var(--c-yellow); color:#1a1a1a; }
+        .box { border:1px solid #ececec; }
+        .card img { object-fit: cover; height: 180px; width: 100%; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#"><strong>Gimnasio • Plataforma</strong></a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
+                <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMain" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#rutinas">Rutinas</a>
+                <a class="navbar-item" href="#dietas">Dietas recomendadas</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- RUTINAS -->
+<section id="rutinas" class="section">
+    <div class="container">
+        <h2 class="title is-3 has-accent-underline">Rutinas recomendadas</h2>
+        <p class="mb-4">Fuente: <strong>API Ninjas</strong> (<code>/v1/exercises</code>) — <span class="tag is-crimson">requiere API key</span></p>
+
+        <form id="form-ej" class="box">
+            <div class="columns is-variable is-4">
+                <div class="column is-12 is-4-desktop">
+                    <label class="label">Músculo</label>
+                    <div class="select is-fullwidth">
+                        <select id="muscle">
+                            <option value="">(cualquiera)</option>
+                            <option>abdominals</option><option>abductors</option><option>adductors</option>
+                            <option>biceps</option><option>calves</option><option>chest</option>
+                            <option>forearms</option><option>glutes</option><option>hamstrings</option>
+                            <option>lats</option><option>lower_back</option><option>neck</option>
+                            <option>quadriceps</option><option>traps</option><option>triceps</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="column is-12 is-4-desktop">
+                    <label class="label">Tipo</label>
+                    <div class="select is-fullwidth">
+                        <select id="type">
+                            <option value="">(cualquiera)</option>
+                            <option>strength</option><option>cardio</option><option>stretching</option>
+                            <option>plyometrics</option><option>powerlifting</option><option>strongman</option>
+                            <option>olympic_weightlifting</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="column is-12 is-4-desktop">
+                    <label class="label">&nbsp;</label>
+                    <button class="button is-accent is-fullwidth" type="submit">Buscar</button>
+                </div>
+            </div>
+            <p class="is-size-7 has-text-grey">Consejo: corre esta página con <em>Live Server</em> o <code>python -m http.server</code> para evitar problemas de CORS.</p>
+        </form>
+
+        <div id="ej-estado" class="notification is-light" style="display:none;"></div>
+        <div id="ej-lista" class="columns is-multiline"></div>
+    </div>
+</section>
+
+<!-- DIETAS -->
+<section id="dietas" class="section">
+    <div class="container">
+        <h2 class="title is-3 has-accent-underline">Dietas / recetas recomendadas</h2>
+        <p class="mb-4">Fuente: <strong>TheMealDB</strong> — <span class="tag is-yellow">sin llave</span></p>
+
+        <div class="box">
+            <div class="columns is-variable is-4">
+                <div class="column is-12 is-4-desktop">
+                    <label class="label">Categoría</label>
+                    <div class="select is-fullwidth">
+                        <select id="meal-category">
+                            <option value="">(todas)</option>
+                            <option>Beef</option><option>Chicken</option><option>Dessert</option>
+                            <option>Lamb</option><option>Pasta</option><option>Pork</option>
+                            <option>Seafood</option><option>Side</option><option>Starter</option>
+                            <option>Vegan</option><option>Vegetarian</option><option>Breakfast</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="column is-12 is-4-desktop">
+                    <label class="label">Buscar por nombre</label>
+                    <input id="meal-query" class="input" type="text" placeholder="e.g., chicken, salad, rice">
+                </div>
+                <div class="column is-12 is-4-desktop">
+                    <label class="label">&nbsp;</label>
+                    <div class="buttons">
+                        <button id="btnMealSearch" class="button is-primary">Buscar</button>
+                        <button id="btnMealRandom" class="button is-outline-burgundy">Sugerencia aleatoria</button>
+                    </div>
+                </div>
+            </div>
+            <p class="is-size-7 has-text-grey">Nota: TheMealDB no trae calorías/macros. Si quieres macros, integramos API Ninjas <code>/v1/nutrition</code> vía backend.</p>
+        </div>
+
+        <div id="meal-estado" class="notification is-light" style="display:none;"></div>
+        <div id="meal-lista" class="columns is-multiline"></div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p><strong>Proyecto Académico — Plataforma de Gimnasio</strong> · 2025</p>
+    </div>
+</footer>
+
+<!-- JS -->
+<script>
+    // Navbar burger
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgers = Array.from(document.querySelectorAll('.navbar-burger'));
+        burgers.forEach(b => b.addEventListener('click', () => {
+            const target = document.getElementById(b.dataset.target);
+            b.classList.toggle('is-active'); target.classList.toggle('is-active');
+        }));
+    });
+
+    /* ====== RUTINAS (API Ninjas) ====== */
+    const API_NINJAS_KEY = 'TU_API_KEY_AQUI'; // ⚠️ SOLO PARA PRUEBA LOCAL
+    const $formEJ = document.getElementById('form-ej');
+    const $ejEstado = document.getElementById('ej-estado');
+    const $ejLista  = document.getElementById('ej-lista');
+
+    function cardEjercicio(e){
+        const equip = e.equipment ? `<span class="tag is-yellow">${e.equipment}</span>` : '';
+        const nivel = e.difficulty ? `<span class="tag is-orange">${e.difficulty}</span>` : '';
+        return `
+        <div class="column is-12-mobile is-6-tablet is-4-desktop">
+          <div class="box">
+            <h4 class="title is-5">${e.name}</h4>
+            <p class="mb-1"><strong>Músculo:</strong> ${e.muscle || '—'}</p>
+            <p class="mb-1"><strong>Tipo:</strong> ${e.type || '—'}</p>
+            <p class="mb-2"><strong>Equipo/Nivel:</strong> ${equip} ${nivel}</p>
+            <details class="mt-2">
+              <summary class="has-text-weight-semibold">Instrucciones</summary>
+              <p class="mt-2">${e.instructions || '—'}</p>
+            </details>
+          </div>
+        </div>`;
+    }
+
+    async function buscarEjercicios(muscle, type){
+        $ejEstado.style.display = 'block';
+        $ejEstado.className = 'notification is-info is-light';
+        $ejEstado.textContent = 'Buscando ejercicios…';
+        $ejLista.innerHTML = '';
+
+        const params = new URLSearchParams();
+        if (muscle) params.append('muscle', muscle);
+        if (type) params.append('type', type);
+        params.append('offset','0');
+
+        try{
+            const resp = await fetch('https://api.api-ninjas.com/v1/exercises?' + params.toString(), {
+                headers: { 'X-Api-Key': API_NINJAS_KEY }
+            });
+            if(!resp.ok) throw new Error('HTTP ' + resp.status);
+            const data = await resp.json();
+
+            if(!Array.isArray(data) || data.length === 0){
+                $ejEstado.className = 'notification is-warning is-light';
+                $ejEstado.textContent = 'Sin resultados para esos filtros.';
+                return;
+            }
+            $ejLista.innerHTML = data.slice(0, 9).map(cardEjercicio).join('');
+            $ejEstado.style.display = 'none';
+        }catch(err){
+            $ejEstado.className = 'notification is-danger is-light';
+            $ejEstado.textContent = 'Error consultando la API. Revisa tu API key o ejecuta desde http(s).';
+        }
+    }
+
+    $formEJ.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const muscle = document.getElementById('muscle').value.trim();
+        const type   = document.getElementById('type').value.trim();
+        buscarEjercicios(muscle, type);
+    });
+
+    /* ====== DIETAS (TheMealDB) ====== */
+    const $mealEstado = document.getElementById('meal-estado');
+    const $mealLista  = document.getElementById('meal-lista');
+    const $mealCategory = document.getElementById('meal-category');
+    const $mealQuery    = document.getElementById('meal-query');
+    const $btnMealSearch= document.getElementById('btnMealSearch');
+    const $btnMealRandom= document.getElementById('btnMealRandom');
+
+    function cardMeal(m){
+        const img = m.strMealThumb || 'https://via.placeholder.com/600x400?text=Meal';
+        return `
+        <div class="column is-12-mobile is-6-tablet is-4-desktop">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="${img}" alt="${m.strMeal}">
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title is-5">${m.strMeal}</p>
+              <p class="subtitle is-6">${m.strArea || ''} ${m.strCategory ? '· ' + m.strCategory : ''}</p>
+              <div class="buttons">
+                <a class="button is-primary" href="https://www.themealdb.com/meal.php?c=${m.idMeal}" target="_blank">Ver receta</a>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    async function mealSearch(){
+        $mealEstado.style.display = 'block';
+        $mealEstado.className = 'notification is-info is-light';
+        $mealEstado.textContent = 'Buscando recetas…';
+        $mealLista.innerHTML = '';
+
+        try{
+            const q = $mealQuery.value.trim();
+            const cat = $mealCategory.value.trim();
+
+            // Si hay texto, buscar por nombre; si no, por categoría; si nada, random de categoría común
+            let data = [];
+            if(q){
+                const r = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=' + encodeURIComponent(q));
+                const j = await r.json();
+                data = j.meals || [];
+            } else if(cat){
+                const r = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=' + encodeURIComponent(cat));
+                const j = await r.json();
+                data = j.meals || [];
+            } else {
+                const r = await fetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Chicken');
+                const j = await r.json();
+                data = j.meals || [];
+            }
+
+            if(data.length === 0){
+                $mealEstado.className = 'notification is-warning is-light';
+                $mealEstado.textContent = 'No se encontraron recetas.';
+                return;
+            }
+            $mealLista.innerHTML = data.slice(0,9).map(cardMeal).join('');
+            $mealEstado.style.display = 'none';
+        }catch(e){
+            $mealEstado.className = 'notification is-danger is-light';
+            $mealEstado.textContent = 'Error consultando recetas.';
+        }
+    }
+
+    async function mealRandom(){
+        $mealEstado.style.display = 'block';
+        $mealEstado.className = 'notification is-info is-light';
+        $mealEstado.textContent = 'Cargando receta aleatoria…';
+        $mealLista.innerHTML = '';
+        try{
+            const r = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+            const j = await r.json();
+            const m = j.meals || [];
+            if(m.length){
+                $mealLista.innerHTML = m.map(cardMeal).join('');
+                $mealEstado.style.display = 'none';
+            } else {
+                $mealEstado.className = 'notification is-warning is-light';
+                $mealEstado.textContent = 'No se pudo cargar receta.';
+            }
+        }catch(e){
+            $mealEstado.className = 'notification is-danger is-light';
+            $mealEstado.textContent = 'Error consultando receta aleatoria.';
+        }
+    }
+
+    $btnMealSearch.addEventListener('click', (e)=>{ e.preventDefault(); mealSearch(); });
+    $btnMealRandom.addEventListener('click', (e)=>{ e.preventDefault(); mealRandom(); });
+
+    // Precarga sugerencias básicas
+    mealSearch();
+</script>
+</body>
+</html>
