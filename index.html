@@ -4,63 +4,80 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Gimnasio — Plataforma</title>
-    <!-- Bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        /* Paleta (mayormente blanco) */
+        /* ===== Paleta y tokens ===== */
         :root{
-            --c-deep-purple:#4a2040; /* morado oscuro */
-            --c-burgundy:#7d1233;     /* burdeos */
-            --c-crimson:#c10f45;      /* rojo fuerte */
-            --c-orange:#ff5a3c;       /* naranja vivo */
-            --c-yellow:#ffc107;       /* amarillo */
-            --c-ink:#1f1f1f;
+            --pink:#ff8be3;    /* rosa vivo como referencia */
+            --ink:#0f0f14;     /* casi negro */
+            --bg:#ffffff;
         }
-        html, body { background:#fff; color:var(--c-ink); }
-        .navbar, .footer { background:#fff; }
-        .navbar .navbar-item strong { color:var(--c-deep-purple); }
-
-        /* Hero con acentos sutiles y fondo blanco */
-        .hero--clean {
-            background: linear-gradient(0deg, rgba(255,90,60,0.06), rgba(255,90,60,0.06));
-            border-bottom: 4px solid var(--c-yellow);
+        html,body{background:var(--bg); color:var(--ink)}
+        /* ===== Navbar estilo referencia ===== */
+        .navbar.is-glassy{
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(255,255,255,.2);
         }
-        .hero--clean .title { color: var(--c-deep-purple); }
-        .hero--clean .subtitle { color:#5a5a5a; }
-
-        /* Botones */
-        .button.is-primary { background: var(--c-yellow); border-color: var(--c-yellow); color:#1a1a1a; }
-        .button.is-primary:hover { filter: brightness(0.95); }
-        .button.is-accent { background: var(--c-orange); border-color: var(--c-orange); color:#fff; }
-        .button.is-accent:hover { filter: brightness(0.95); }
-        .button.is-outline-burgundy { background: transparent; border:2px solid var(--c-burgundy); color: var(--c-burgundy); }
-        .button.is-outline-burgundy:hover { background: var(--c-burgundy); color:#fff; }
-
-        .has-accent-underline { border-bottom: 3px solid var(--c-yellow); display:inline-block; padding-bottom:4px; }
-
-        .box { border:1px solid #ececec; }
-        .box.highlight { border-top:4px solid var(--c-orange); }
-        .plan-featured { border:1px solid var(--c-orange); box-shadow:0 8px 22px rgba(0,0,0,0.06); }
-
-        /* Equipo */
-        .team-card .avatar{
-            width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;
-            border:3px solid var(--c-yellow);
+        .navbar .navbar-item,
+        .navbar .navbar-link{ color: var(--pink); font-weight: 700; letter-spacing:.3px }
+        .brand-title{
+            font-weight:900; color:var(--pink); font-size:1.8rem; letter-spacing:1px
         }
-        .team-card .role { color: var(--c-burgundy); font-weight:700; }
+        .btn-pill{
+            border:2px solid var(--pink); color:var(--pink); border-radius:999px; padding:.75rem 1.25rem; font-weight:800;
+            background: transparent;
+        }
+        .btn-pill:hover{ background:var(--pink); color:#111; }
 
-        .tag.is-crimson { background: var(--c-crimson); color:#fff; }
-        .tag.is-orange  { background: var(--c-orange); color:#fff; }
-        .tag.is-yellow  { background: var(--c-yellow); color:#1a1a1a; }
+        /* ===== HERO ===== */
+        .hero-landing{
+            min-height: calc(100vh - 52px);             /* casi pantalla completa */
+            background-image: url('hero.jpg');          /* 🔁 Reemplaza por tu imagen */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hero-landing::after{                         /* velo sutil como en ref */
+            content:""; position:absolute; inset:0;
+            background: radial-gradient(80% 70% at 70% 20%, rgba(255,255,255,.15), rgba(0,0,0,.35));
+            pointer-events:none;
+        }
+        .hero-inner{
+            position:relative; z-index:1;
+            display:flex; align-items:flex-end; min-height: calc(100vh - 52px);
+            padding: 2rem 1rem 0 1rem;
+        }
+        .headline-giant{
+            color: var(--pink);
+            font-weight: 900;
+            line-height: .9;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-size: clamp(2.6rem, 9vw, 6.5rem);  /* adaptable: móvil→desktop */
+            text-shadow: 0 2px 0 rgba(0,0,0,.15);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== “Programa una visita” ===== */
+        .section-visit .title{
+            font-weight: 900; text-transform: uppercase; letter-spacing:.5px;
+        }
+        .visit-card .input, .visit-card .textarea{ background:#f8f8f8 }
+        .visit-card .button{ border-radius: 999px; padding:.9rem 1.4rem; font-weight:800 }
+
+        /* util */
+        .is-pink{ color: var(--pink) }
+        .is-border-pink{ border:2px solid var(--pink) }
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<!-- NAVBAR (transparente sobre la imagen) -->
+<nav class="navbar is-glassy is-transparent" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item" href="#"><strong>Gimnasio • Plataforma</strong></a>
+            <a class="navbar-item brand-title" href="#">TÍTULO DE TU SITIO</a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
                 <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
             </a>
@@ -68,16 +85,15 @@
 
         <div id="navMain" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="#vision">Visión</a>
-                <a class="navbar-item" href="#equipo">Conoce nuestro equipo</a>
-                <a class="navbar-item" href="#membresias">Membresías</a>
+                <a class="navbar-item" href="#clases">Clases</a>
+                <a class="navbar-item" href="#instructores">Instructores</a>
+                <a class="navbar-item" href="#ubicaciones">Ubicaciones</a>
+                <a class="navbar-item" href="#tienda">Tienda</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-light" id="btnLogin">Iniciar sesión</a>
-                        <a class="button is-primary" href="#membresias">Registrarse</a>
-                    </div>
+                    <span class="mr-2">🛒 <strong class="is-pink">0</strong></span>
+                    <a class="button btn-pill ml-3" href="#visita">ÚNETE A NUESTRO GIMNASIO</a>
                 </div>
             </div>
         </div>
@@ -85,238 +101,95 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero hero--clean">
-    <div class="hero-body">
-        <div class="container">
-            <div class="tags mb-2">
-                <span class="tag is-yellow">Salud</span>
-                <span class="tag is-orange">Entrenamiento</span>
-                <span class="tag is-crimson">Nutrición</span>
-            </div>
-            <h1 class="title">Entrena con propósito. Progresa con datos.</h1>
-            <h2 class="subtitle">Rutinas, nutrición y pagos en una sola plataforma. Profesional, claro y eficaz.</h2>
-            <div class="buttons">
-                <a href="#membresias" class="button is-primary">Ver planes</a>
-                <a href="#equipo" class="button is-outline-burgundy">Conocer al equipo</a>
-            </div>
-        </div>
+<section class="hero hero-landing">
+    <div class="container hero-inner">
+        <h1 class="headline-giant">
+            Entrena en el horario<br>
+            que más te convenga.
+        </h1>
     </div>
 </section>
 
-<!-- VISIÓN -->
-<section id="vision" class="section">
+<!-- PROGRAMA UNA VISITA (como tu segunda referencia) -->
+<section id="visita" class="section section-visit">
     <div class="container">
-        <h2 class="title is-3 has-accent-underline">1. Nuestra visión</h2>
-        <div class="columns is-variable is-6">
-            <div class="column">
-                <div class="box highlight">
-                    <h3 class="title is-5">Salud sostenible</h3>
-                    <p>Ser el gimnasio de referencia que impulsa <strong>hábitos consistentes</strong> priorizando técnica, seguridad y constancia.</p>
-                </div>
+        <nav class="level mb-5">
+            <div class="level-left">
+                <h2 class="title is-1">Programa una visita</h2>
             </div>
-            <div class="column">
-                <div class="box highlight">
-                    <h3 class="title is-5">Acompañamiento real</h3>
-                    <p>Guiarte con <strong>entrenadores y nutriólogos certificados</strong>, usando datos de progreso para personalizar tu camino.</p>
-                </div>
-            </div>
-            <div class="column">
-                <div class="box highlight">
-                    <h3 class="title is-5">Comunidad</h3>
-                    <p>Construir una comunidad que te motive a <strong>volver mañana</strong>. El éxito es acumulativo: sesión a sesión.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        </nav>
 
-<!-- EQUIPO -->
-<section id="equipo" class="section">
-    <div class="container">
-        <h2 class="title is-3 has-accent-underline">2. Conoce nuestro equipo</h2>
-    </div>
-    <div class="container">
-        <div class="columns is-multiline">
-            <!-- Instructores -->
-            <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card team-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://thumbs.dreamstime.com/b/cliente-de-motivaci%C3%B3n-del-instructor-del-gimnasio-47295799.jpg" alt="Instructores">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="role">Instructores</p>
-                        <p class="title is-5 mb-2">Técnica & Progresión</p>
-                        <p>Diseñan y ajustan rutinas seguras y efectivas. Tu plan evoluciona contigo.</p>
-                    </div>
-                </div>
+        <div class="columns is-variable is-7">
+            <!-- Copy -->
+            <div class="column is-12-tablet is-6-desktop">
+                <p class="is-size-5" style="max-width: 46ch">
+                    Haz un recorrido gratuito de 30 minutos por cualquiera de nuestras sedes para decidir si este es el gimnasio correcto para ti.
+                    Podrás probar equipos, observar clases y resolver tus dudas.
+                </p>
             </div>
 
-            <!-- Coordinación -->
-            <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card team-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://hectortena.com.pe/wp-content/uploads/2023/04/depositphotos_10678232-stock-photo-gym-manager-greeting-customer.webp" alt="Coordinación / Gerencia">
-                        </figure>
+            <!-- Formulario -->
+            <div class="column is-12-tablet is-6-desktop">
+                <form class="box visit-card">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Nombre <span class="has-text-grey is-size-7">(obligatorio)</span></label>
+                                <div class="control">
+                                    <input class="input" name="nombre" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Apellido</label>
+                                <div class="control">
+                                    <input class="input" name="apellido"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <p class="role">Coordinación</p>
-                        <p class="title is-5 mb-2">Membresías & Operación</p>
-                        <p>Gestiona usuarios, pagos y reportes. Mantiene tu acceso al día.</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Nutricionista -->
-            <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card team-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://287524.fs1.hubspotusercontent-na1.net/hub/287524/hubfs/Blog_Contenido/WA/nutricion-deportiva-que-es-y-por-que-estudiar-esta-maestria.jpg?width=800&name=nutricion-deportiva-que-es-y-por-que-estudiar-esta-maestria.jpg" alt="Nutricionista">
-                        </figure>
+                    <div class="field">
+                        <label class="label">Correo electrónico <span class="has-text-grey is-size-7">(obligatorio)</span></label>
+                        <div class="control">
+                            <input class="input" type="email" name="email" required />
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <p class="role">Nutrición</p>
-                        <p class="title is-5 mb-2">Estrategia alimentaria</p>
-                        <p>Planes que encajan con tu rutina y presupuesto. Comer bien también se entrena.</p>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Soporte y comunidad -->
-            <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card team-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPrWQjMirpD4U6XzFSqbEe6nUdi8CJZP-WtQ&s" alt="Soporte y comunidad">
-                        </figure>
+                    <div class="field">
+                        <label class="label">Fecha <span class="has-text-grey is-size-7">(obligatorio)</span></label>
+                        <div class="control">
+                            <input class="input" type="date" name="fecha" required />
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <p class="role">Soporte & Comunidad</p>
-                        <p class="title is-5 mb-2">Acompañamiento</p>
-                        <p>Te ayudamos con accesos, horarios y dudas. Queremos verte lograrlo.</p>
+
+                    <div class="field mt-5">
+                        <button type="submit" class="button is-white is-border-pink is-pink">ENVIAR</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
     </div>
 </section>
 
-<!-- MEMBRESÍAS -->
-<section id="membresias" class="section">
-    <div class="container">
-        <h2 class="title is-3 has-accent-underline">3. Planes de membresía</h2>
-        <div class="columns is-variable is-6">
-            <div class="column">
-                <div class="box">
-                    <h3 class="title is-4">Básico</h3>
-                    <ul class="content">
-                        <li>Rutinas y dietas estándar.</li>
-                        <li>Crear rutinas locales.</li>
-                        <li>Soporte esencial.</li>
-                    </ul>
-                    <a class="button is-outline-burgundy is-fullwidth">Elegir Básico</a>
-                </div>
-            </div>
-            <div class="column">
-                <div class="box plan-featured">
-                    <h3 class="title is-4">El Gran Machote</h3>
-                    <ul class="content">
-                        <li>Rutinas personalizadas por instructor.</li>
-                        <li>Dietas personalizadas por nutriólogo.</li>
-                        <li>Reportes y seguimiento avanzado.</li>
-                        <li>Acceso condicionado a pago al día.</li>
-                    </ul>
-                    <a class="button is-accent is-fullwidth">Elegir El Gran Machote</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA -->
-<section class="section">
-    <div class="container">
-        <div class="box has-text-centered">
-            <h3 class="title is-4">¿Listo para comenzar?</h3>
-            <p>Regístrate y prueba el flujo de registro y acceso a contenidos.</p>
-            <div class="buttons is-centered mt-4">
-                <a class="button is-primary" href="#membresias">Crear cuenta</a>
-                <a class="button is-light" id="btnLogin2">Ya tengo cuenta</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
+<!-- FOOTER mínimo -->
 <footer class="footer">
     <div class="content has-text-centered">
         <p><strong>Proyecto Académico — Plataforma de Gimnasio</strong> · 2025</p>
     </div>
 </footer>
 
-<!-- MODAL LOGIN -->
-<div class="modal" id="loginModal" aria-hidden="true">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-        <header class="modal-card-head">
-            <p class="modal-card-title">Iniciar sesión</p>
-            <button class="delete" aria-label="close" id="closeLogin"></button>
-        </header>
-        <section class="modal-card-body">
-            <div class="field">
-                <label class="label">Correo</label>
-                <div class="control">
-                    <input class="input" type="email" placeholder="usuario@correo.com" autocomplete="username">
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Contraseña</label>
-                <div class="control">
-                    <input class="input" type="password" placeholder="••••••••" autocomplete="current-password">
-                </div>
-            </div>
-        </section>
-        <footer class="modal-card-foot">
-            <button class="button is-primary">Entrar</button>
-            <button class="button" id="cancelLogin">Cancelar</button>
-        </footer>
-    </div>
-</div>
-
-<!-- JS mínimo (sin APIs externas) -->
+<!-- JS mínimo -->
 <script>
     // Navbar burger
     document.addEventListener('DOMContentLoaded', () => {
         const burgers = Array.from(document.querySelectorAll('.navbar-burger'));
-        burgers.forEach(b => {
-            b.addEventListener('click', () => {
-                const target = document.getElementById(b.dataset.target);
-                b.classList.toggle('is-active');
-                if (target) target.classList.toggle('is-active');
-            });
-        });
-    });
-
-    // Modal Login
-    const loginModal = document.getElementById('loginModal');
-    const openBtns = [document.getElementById('btnLogin'), document.getElementById('btnLogin2')].filter(Boolean);
-    const closeBtns = [document.getElementById('closeLogin'), document.getElementById('cancelLogin')].filter(Boolean);
-    openBtns.forEach(btn => btn.addEventListener('click', () => {
-        loginModal.classList.add('is-active');
-        loginModal.setAttribute('aria-hidden', 'false');
-    }));
-    closeBtns.forEach(btn => btn.addEventListener('click', () => {
-        loginModal.classList.remove('is-active');
-        loginModal.setAttribute('aria-hidden', 'true');
-    }));
-    const bg = document.querySelector('#loginModal .modal-background');
-    if (bg) bg.addEventListener('click', () => {
-        loginModal.classList.remove('is-active');
-        loginModal.setAttribute('aria-hidden', 'true');
+        burgers.forEach(b => b.addEventListener('click', () => {
+            const t = document.getElementById(b.dataset.target);
+            b.classList.toggle('is-active'); if (t) t.classList.toggle('is-active');
+        }));
     });
 </script>
 </body>
