@@ -8,7 +8,8 @@
     <style>
         :root{
             --c-yellow:#ffc107;   /* amarillo principal */
-            --c-ink:#0f0f14;
+            --c-ink:#0f0f14;      /* casi negro */
+            --c-soft:#f7f7f7;     /* gris muy claro */
         }
         html,body{background:#fff; color:var(--c-ink)}
 
@@ -25,8 +26,7 @@
         }
         .btn-pill{
             border:2px solid var(--c-yellow); color:var(--c-yellow);
-            border-radius:999px; padding:.75rem 1.25rem; font-weight:800;
-            background: transparent;
+            border-radius:999px; padding:.75rem 1.25rem; font-weight:800; background: transparent;
         }
         .btn-pill:hover{ background:var(--c-yellow); color:#111; }
 
@@ -34,9 +34,7 @@
         .hero-landing{
             min-height: calc(100vh - 52px);
             background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg');
-            background-size: cover;
-            background-position: center;
-            position: relative;
+            background-size: cover; background-position: center; position: relative;
             transition: background-image 1s ease-in-out;
         }
         .hero-landing::after{
@@ -50,23 +48,31 @@
             padding: 2rem 1rem 0 1rem;
         }
         .headline-giant{
-            color: var(--c-yellow);
-            font-weight: 900;
-            line-height: .9;
-            text-transform: uppercase;
-            letter-spacing: .5px;
+            color: var(--c-yellow); font-weight: 900; line-height: .9;
+            text-transform: uppercase; letter-spacing: .5px;
             font-size: clamp(2.6rem, 9vw, 6.5rem);
             text-shadow: 0 2px 0 rgba(0,0,0,.25);
             margin-bottom: 1rem;
         }
 
-        /* SECCIÓN VISITA */
-        .section-visit .title{
-            font-weight: 900; text-transform: uppercase; letter-spacing:.5px; color:var(--c-ink);
+        /* BLOQUES */
+        .section-muted{ background: var(--c-soft); }
+        .title-underline{ border-bottom: 3px solid var(--c-yellow); display:inline-block; padding-bottom:4px; }
+        .card.featured{ border:1px solid var(--c-yellow); box-shadow:0 10px 24px rgba(0,0,0,.06); }
+        .icon-bullet{ font-size:2rem; line-height:1; }
+
+        /* PROFESIONALES */
+        .pro-card .avatar{
+            width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;
+            border:3px solid var(--c-yellow);
         }
+        .pro-card .role{ color:#b38800; font-weight:800; letter-spacing:.3px; }
+
+        /* VISITA */
         .visit-card .input, .visit-card .textarea{ background:#f8f8f8 }
         .visit-card .button{ border-radius: 999px; padding:.9rem 1.4rem; font-weight:800 }
 
+        /* util */
         .is-yellow{ color: var(--c-yellow) }
         .is-border-yellow{ border:2px solid var(--c-yellow) }
     </style>
@@ -85,10 +91,10 @@
 
         <div id="navMain" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="#clases">Clases</a>
-                <a class="navbar-item" href="#instructores">Instructores</a>
-                <a class="navbar-item" href="#ubicaciones">Ubicaciones</a>
-                <a class="navbar-item" href="#tienda">Tienda</a>
+                <a class="navbar-item" href="#planes">Planes</a>
+                <a class="navbar-item" href="#beneficios">Beneficios</a>
+                <a class="navbar-item" href="#equipo">Profesionales</a>
+                <a class="navbar-item" href="#instalaciones">Instalaciones</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -110,5 +116,283 @@
     </div>
 </section>
 
+<!-- PLANES -->
+<section id="planes" class="section">
+    <div class="container">
+        <h2 class="title is-3 title-underline">Nuestros planes</h2>
+        <div class="columns is-variable is-6">
+            <div class="column">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="title is-4">Básico</h3>
+                        <ul class="content">
+                            <li>Rutinas y menús estándar.</li>
+                            <li>Acceso en horarios generales.</li>
+                            <li>Soporte esencial.</li>
+                        </ul>
+                        <a class="button is-white is-border-yellow is-fullwidth">Elegir Básico</a>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card featured">
+                    <div class="card-content">
+                        <h3 class="title is-4">Premium</h3>
+                        <ul class="content">
+                            <li>Rutinas personalizadas (entrenador).</li>
+                            <li>Dieta personalizada (nutriólogo).</li>
+                            <li>Seguimiento y reportes de progreso.</li>
+                        </ul>
+                        <a class="button is-warning is-fullwidth">Elegir Premium</a>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="title is-4">Empresarial</h3>
+                        <ul class="content">
+                            <li>Descuentos por volumen.</li>
+                            <li>Reportes para RRHH.</li>
+                            <li>Activaciones y charlas in situ.</li>
+                        </ul>
+                        <a class="button is-white is-border-yellow is-fullwidth">Solicitar información</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="has-text-grey">* El acceso a planes personalizados requiere membresía activa al día.</p>
+    </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section id="beneficios" class="section section-muted">
+    <div class="container">
+        <h2 class="title is-3 title-underline">Beneficios</h2>
+        <div class="columns is-variable is-6">
+            <div class="column">
+                <div class="box">
+                    <div class="icon-bullet">✅</div>
+                    <h3 class="title is-5 mt-2">Programas efectivos</h3>
+                    <p>Protocolos de entrenamiento organizados por objetivos y niveles.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <div class="icon-bullet">🧠</div>
+                    <h3 class="title is-5 mt-2">Profesionales certificados</h3>
+                    <p>Entrenadores y nutriólogos con experiencia real y resultados.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <div class="icon-bullet">💳</div>
+                    <h3 class="title is-5 mt-2">Pagos simples y claros</h3>
+                    <p>Sin letras pequeñas: renueva, pausa o mejora tu plan cuando lo necesites.</p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="box">
+                    <div class="icon-bullet">📱</div>
+                    <h3 class="title is-5 mt-2">Web y móvil</h3>
+                    <p>Accede a tu rutina y plan desde cualquier dispositivo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROFESIONALES -->
+<section id="equipo" class="section">
+    <div class="container">
+        <h2 class="title is-3 title-underline">Profesionales</h2>
+        <div class="columns is-multiline">
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card pro-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.pexels.com/photos/4753893/pexels-photo-4753893.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Entrenador">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="role">Entrenador</p>
+                        <p class="title is-5 mb-2">Técnica & Progresión</p>
+                        <p>Diseño de rutinas, corrección de forma y planificación por fases.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card pro-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.pexels.com/photos/3184192/pexels-photo-3184192.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Nutriólogo">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="role">Nutriólogo</p>
+                        <p class="title is-5 mb-2">Estrategia alimentaria</p>
+                        <p>Plan nutricional por objetivos, gustos y presupuesto real.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card pro-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.pexels.com/photos/4506109/pexels-photo-4506109.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fisioterapeuta">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="role">Fisioterapeuta</p>
+                        <p class="title is-5 mb-2">Prevención & Recuperación</p>
+                        <p>Evaluación de movilidad, rehabilitación y ajustes de carga.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-12-mobile is-6-tablet is-3-desktop">
+                <div class="card pro-card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img class="avatar" src="https://images.pexels.com/photos/8867431/pexels-photo-8867431.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Coordinación">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="role">Coordinación</p>
+                        <p class="title is-5 mb-2">Membresías & Operación</p>
+                        <p>Altas, pagos y soporte. Todo para que entrenes sin fricciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INSTALACIONES (galería) -->
+<section id="instalaciones" class="section section-muted">
+    <div class="container">
+        <h2 class="title is-3 title-underline">Instalaciones</h2>
+        <div class="columns">
+            <div class="column">
+                <figure class="image is-16by9">
+                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg" alt="Dumbbells">
+                </figure>
+                <p class="has-text-weight-semibold mt-2">Área de fuerza</p>
+            </div>
+            <div class="column">
+                <figure class="image is-16by9">
+                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20241224/pngtree-a-fully-equipped-gym-with-dumbbells-weight-machines-and-cardio-equipment-image_16843660.jpg" alt="Máquinas y cardio">
+                </figure>
+                <p class="has-text-weight-semibold mt-2">Máquinas & Cardio</p>
+            </div>
+            <div class="column">
+                <figure class="image is-16by9">
+                    <img src="https://t3.ftcdn.net/jpg/08/27/87/60/360_F_827876077_k0EWo3jSiWZPR8fRgsSbZFT9SkrozNuj.jpg" alt="Ambiente moderno">
+                </figure>
+                <p class="has-text-weight-semibold mt-2">Ambiente moderno</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- PROGRAMA UNA VISITA -->
-<section id="visita" c
+<section id="visita" class="section">
+    <div class="container">
+        <h2 class="title is-3 title-underline">Programa una visita</h2>
+
+        <div class="columns is-variable is-7">
+            <!-- Copy -->
+            <div class="column is-12-tablet is-6-desktop">
+                <p class="is-size-5" style="max-width: 46ch">
+                    Haz un recorrido gratuito de 30 minutos por cualquiera de nuestras sedes para decidir si este es el gimnasio correcto para ti.
+                    Podrás probar equipos, observar clases y resolver tus dudas.
+                </p>
+            </div>
+
+            <!-- Formulario -->
+            <div class="column is-12-tablet is-6-desktop">
+                <form class="box visit-card">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Nombre <span class="has-text-grey is-size-7">(obligatorio)</span></label>
+                                <div class="control"><input class="input" name="nombre" required /></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Apellido</label>
+                                <div class="control"><input class="input" name="apellido"/></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Correo electrónico <span class="has-text-grey is-size-7">(obligatorio)</span></label>
+                        <div class="control"><input class="input" type="email" name="email" required /></div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Fecha <span class="has-text-grey is-size-7">(obligatorio)</span></label>
+                        <div class="control"><input class="input" type="date" name="fecha" required /></div>
+                    </div>
+
+                    <div class="field mt-5">
+                        <button type="submit" class="button is-white is-border-yellow is-yellow">ENVIAR</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="section section-muted">
+    <div class="container">
+        <div class="box has-text-centered" style="border:1px solid #ececec">
+            <h3 class="title is-4" style="font-weight:900">Tu mejor versión comienza hoy</h3>
+            <p>Únete y recibe tu plan inicial en minutos.</p>
+            <div class="buttons is-centered mt-4">
+                <a class="button is-warning">Registrarme</a>
+                <a class="button is-white is-border-yellow">Agendar visita</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p><strong>Proyecto Académico — Plataforma de Gimnasio</strong> · 2025</p>
+    </div>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+    // Navbar burger
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgers = Array.from(document.querySelectorAll('.navbar-burger'));
+        burgers.forEach(b => b.addEventListener('click', () => {
+            const t = document.getElementById(b.dataset.target);
+            b.classList.toggle('is-active'); if (t) t.classList.toggle('is-active');
+        }));
+    });
+
+    // Rotación de fondo del HERO
+    const imgs = [
+        'https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg',
+        'https://png.pngtree.com/thumb_back/fh260/background/20241224/pngtree-a-fully-equipped-gym-with-dumbbells-weight-machines-and-cardio-equipment-image_16843660.jpg',
+        'https://t3.ftcdn.net/jpg/08/27/87/60/360_F_827876077_k0EWo3jSiWZPR8fRgsSbZFT9SkrozNuj.jpg'
+    ];
+    let i = 0;
+    const hero = document.querySelector('.hero-landing');
+    setInterval(() => {
+        i = (i + 1) % imgs.length;
+        hero.style.backgroundImage = `url(${imgs[i]})`;
+    }, 5000);
+</script>
+</body>
+</html>
