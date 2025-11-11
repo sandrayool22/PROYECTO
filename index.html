@@ -21,7 +21,10 @@
         .navbar .navbar-item strong { color:var(--c-deep-purple); }
 
         /* Hero con acentos sutiles y fondo blanco */
-        .hero--clean { background: linear-gradient(0deg, rgba(255,90,60,0.06), rgba(255,90,60,0.06)); border-bottom: 4px solid var(--c-yellow); }
+        .hero--clean {
+            background: linear-gradient(0deg, rgba(255,90,60,0.06), rgba(255,90,60,0.06));
+            border-bottom: 4px solid var(--c-yellow);
+        }
         .hero--clean .title { color: var(--c-deep-purple); }
         .hero--clean .subtitle { color:#5a5a5a; }
 
@@ -62,18 +65,18 @@
                 <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
             </a>
         </div>
+
         <div id="navMain" class="navbar-menu">
             <div class="navbar-start">
                 <a class="navbar-item" href="#vision">Visión</a>
                 <a class="navbar-item" href="#equipo">Conoce nuestro equipo</a>
                 <a class="navbar-item" href="#membresias">Membresías</a>
-                <a class="navbar-item" href="#demo-api">Demo API</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
                         <a class="button is-light" id="btnLogin">Iniciar sesión</a>
-                        <a class="button is-primary">Registrarse</a>
+                        <a class="button is-primary" href="#membresias">Registrarse</a>
                     </div>
                 </div>
             </div>
@@ -234,39 +237,6 @@
     </div>
 </section>
 
-<!-- DEMO API (Bored API) -->
-<section id="demo-api" class="section">
-    <div class="container">
-        <h2 class="title is-3 has-accent-underline">4. Demo API pública</h2>
-        <div class="columns">
-            <div class="column is-12 is-8-desktop">
-                <div class="box">
-                    <div class="level">
-                        <div class="level-left">
-                            <h3 class="title is-5">Sugeridor de actividad</h3>
-                        </div>
-                        <div class="level-right">
-                            <button id="btnRecargar" class="button is-accent">Otra idea</button>
-                        </div>
-                    </div>
-
-                    <p class="mb-2">Consulta en vivo a <code>boredapi.com</code> (sin llave).</p>
-
-                    <div id="apiEstado" class="notification is-light" style="display:none;"></div>
-
-                    <div id="actividad" class="content">
-                        <p><strong>Actividad:</strong> <span id="a-actividad">—</span></p>
-                        <p><strong>Tipo:</strong> <span id="a-tipo">—</span></p>
-                        <p><strong>Participantes:</strong> <span id="a-participantes">—</span></p>
-                        <p><strong>Costo estimado:</strong> <span id="a-costo">—</span></p>
-                        <p class="is-size-7 has-text-grey">Tip: Usa este bloque como plantilla para integrar cualquier otra API.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- CTA -->
 <section class="section">
     <div class="container">
@@ -274,7 +244,7 @@
             <h3 class="title is-4">¿Listo para comenzar?</h3>
             <p>Regístrate y prueba el flujo de registro y acceso a contenidos.</p>
             <div class="buttons is-centered mt-4">
-                <a class="button is-primary">Crear cuenta</a>
+                <a class="button is-primary" href="#membresias">Crear cuenta</a>
                 <a class="button is-light" id="btnLogin2">Ya tengo cuenta</a>
             </div>
         </div>
@@ -289,7 +259,7 @@
 </footer>
 
 <!-- MODAL LOGIN -->
-<div class="modal" id="loginModal">
+<div class="modal" id="loginModal" aria-hidden="true">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
@@ -300,13 +270,13 @@
             <div class="field">
                 <label class="label">Correo</label>
                 <div class="control">
-                    <input class="input" type="email" placeholder="usuario@correo.com">
+                    <input class="input" type="email" placeholder="usuario@correo.com" autocomplete="username">
                 </div>
             </div>
             <div class="field">
                 <label class="label">Contraseña</label>
                 <div class="control">
-                    <input class="input" type="password" placeholder="••••••••">
+                    <input class="input" type="password" placeholder="••••••••" autocomplete="current-password">
                 </div>
             </div>
         </section>
@@ -317,7 +287,7 @@
     </div>
 </div>
 
-<!-- JS mínimo -->
+<!-- JS mínimo (sin APIs externas) -->
 <script>
     // Navbar burger
     document.addEventListener('DOMContentLoaded', () => {
@@ -326,7 +296,7 @@
             b.addEventListener('click', () => {
                 const target = document.getElementById(b.dataset.target);
                 b.classList.toggle('is-active');
-                target.classList.toggle('is-active');
+                if (target) target.classList.toggle('is-active');
             });
         });
     });
@@ -335,60 +305,19 @@
     const loginModal = document.getElementById('loginModal');
     const openBtns = [document.getElementById('btnLogin'), document.getElementById('btnLogin2')].filter(Boolean);
     const closeBtns = [document.getElementById('closeLogin'), document.getElementById('cancelLogin')].filter(Boolean);
-    openBtns.forEach(btn => btn.addEventListener('click', () => loginModal.classList.add('is-active')));
-    closeBtns.forEach(btn => btn.addEventListener('click', () => loginModal.classList.remove('is-active')));
-    document.querySelector('#loginModal .modal-background').addEventListener('click', () => loginModal.classList.remove('is-active'));
-
-    // -------- DEMO API --------
-    const elEstado = document.getElementById('apiEstado');
-    const elAct   = document.getElementById('a-actividad');
-    const elTipo  = document.getElementById('a-tipo');
-    const elPart  = document.getElementById('a-participantes');
-    const elCosto = document.getElementById('a-costo');
-    const btnRecargar = document.getElementById('btnRecargar');
-
-    function precioTexto(price){
-        // price ∈ [0,1] según BoredAPI
-        if (price === 0) return "Gratis";
-        if (price <= 0.3) return "Bajo";
-        if (price <= 0.6) return "Medio";
-        return "Alto";
-    }
-
-    async function cargarActividad(){
-        elEstado.style.display = 'block';
-        elEstado.className = 'notification is-info is-light';
-        elEstado.textContent = 'Consultando API…';
-        try {
-            // 1. Obtener frase en inglés
-            const resp = await fetch('https://api.adviceslip.com/advice');
-            const data = await resp.json();
-            const frase = data.slip.advice;
-
-            // 2. Traducir al español
-            const trad = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(frase)}&langpair=en|es`);
-            const tData = await trad.json();
-            const fraseEs = tData.responseData.translatedText || frase;
-
-            // Mostrar resultado
-            elAct.textContent   = fraseEs;
-            elTipo.textContent  = 'Consejo (traducido)';
-            elPart.textContent  = '1';
-            elCosto.textContent = 'Gratis';
-            elEstado.className = 'notification is-success is-light';
-            elEstado.textContent = 'Listo: datos recibidos.';
-            setTimeout(() => elEstado.style.display='none', 1500);
-        } catch (err) {
-            elEstado.className = 'notification is-danger is-light';
-            elEstado.textContent = 'Error al consultar la API.';
-        }
-    }
-
-
-
-    btnRecargar.addEventListener('click', cargarActividad);
-    // cargar al entrar
-    cargarActividad();
+    openBtns.forEach(btn => btn.addEventListener('click', () => {
+        loginModal.classList.add('is-active');
+        loginModal.setAttribute('aria-hidden', 'false');
+    }));
+    closeBtns.forEach(btn => btn.addEventListener('click', () => {
+        loginModal.classList.remove('is-active');
+        loginModal.setAttribute('aria-hidden', 'true');
+    }));
+    const bg = document.querySelector('#loginModal .modal-background');
+    if (bg) bg.addEventListener('click', () => {
+        loginModal.classList.remove('is-active');
+        loginModal.setAttribute('aria-hidden', 'true');
+    });
 </script>
 </body>
 </html>
