@@ -7,80 +7,89 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
         :root{
-            --c-yellow:#ffc107;   /* amarillo principal */
-            --c-ink:#0f0f14;      /* casi negro */
-            --c-soft:#f7f7f7;     /* gris muy claro */
+            --bg:#0a0a0e;          /* fondo negro */
+            --ink:#f2f2f2;         /* texto claro */
+            --muted:#c8c8c8;       /* texto secundario */
+            --accent:#ffc107;      /* amarillo acordado */
+            --card:#111118;        /* tarjetas oscuras */
         }
-        html,body{background:#fff; color:var(--c-ink)}
+        html,body{background:var(--bg); color:var(--ink)}
+        .title, .subtitle{color:var(--ink)}
+        .title-underline{ border-bottom:3px solid var(--accent); display:inline-block; padding-bottom:4px; }
 
-        /* NAVBAR */
-        .navbar.is-glassy{
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(6px);
-            border-bottom: 1px solid rgba(255,255,255,.2);
+        /* Navbar */
+        .navbar.is-darkglass{
+            background: rgba(10,10,14,.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,.06);
         }
         .navbar .navbar-item,
-        .navbar .navbar-link{ color: var(--c-yellow); font-weight: 700; letter-spacing:.3px }
-        .brand-title{
-            font-weight:900; color:var(--c-yellow); font-size:1.8rem; letter-spacing:1px
-        }
-        .btn-pill{
-            border:2px solid var(--c-yellow); color:var(--c-yellow);
-            border-radius:999px; padding:.75rem 1.25rem; font-weight:800; background: transparent;
-        }
-        .btn-pill:hover{ background:var(--c-yellow); color:#111; }
+        .navbar .navbar-link{ color: var(--accent); font-weight:700; letter-spacing:.3px }
+        .brand-title{ color:var(--accent); font-weight:900; font-size:1.8rem; letter-spacing:1px }
+        .btn-pill{ border:2px solid var(--accent); color:var(--accent); border-radius:999px; padding:.7rem 1.2rem; font-weight:800; background:transparent }
+        .btn-pill:hover{ background:var(--accent); color:#151515 }
 
         /* HERO */
         .hero-landing{
-            min-height: calc(100vh - 52px);
+            min-height: calc(100vh - 56px);
             background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg');
             background-size: cover; background-position: center; position: relative;
             transition: background-image 1s ease-in-out;
         }
         .hero-landing::after{
             content:""; position:absolute; inset:0;
-            background: radial-gradient(80% 70% at 70% 20%, rgba(255,255,255,.05), rgba(0,0,0,.45));
+            background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65));
             pointer-events:none;
         }
-        .hero-inner{
-            position:relative; z-index:1;
-            display:flex; align-items:flex-end; min-height: calc(100vh - 52px);
-            padding: 2rem 1rem 0 1rem;
-        }
+        .hero-inner{ position:relative; z-index:1; min-height: calc(100vh - 56px); display:flex; align-items:flex-end; padding: 2rem 1rem }
         .headline-giant{
-            color: var(--c-yellow); font-weight: 900; line-height: .9;
-            text-transform: uppercase; letter-spacing: .5px;
-            font-size: clamp(2.6rem, 9vw, 6.5rem);
-            text-shadow: 0 2px 0 rgba(0,0,0,.25);
-            margin-bottom: 1rem;
+            color: var(--accent); font-weight:900; line-height:.9; text-transform:uppercase; letter-spacing:.5px;
+            font-size: clamp(2.4rem, 9vw, 6rem); text-shadow: 0 2px 0 rgba(0,0,0,.55); margin-bottom: .5rem;
+        }
+        .lead{ color:var(--muted) }
+
+        /* Tarjetas visuales (sin bullets) */
+        .vcard{
+            position:relative; border-radius:14px; overflow:hidden; background:var(--card);
+            box-shadow: 0 10px 24px rgba(0,0,0,.35);
+        }
+        .vcard .media-img{ width:100%; height:240px; background:#000; object-fit:cover; }
+        .vcard .overlay{
+            position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.65) 60%);
+        }
+        .vcard .label{
+            position:absolute; left:16px; bottom:16px; right:16px;
+            color:#fff; font-weight:900; text-transform:uppercase; letter-spacing:.5px; font-size:1.2rem;
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .chip{ background:rgba(255,193,7,.95); color:#111; padding:.25rem .6rem; border-radius:999px; font-weight:800; font-size:.8rem }
+
+        /* Mosaico visual (beneficios / instalaciones) */
+        .mosaic .tile{
+            position:relative; border-radius:14px; overflow:hidden; height:220px; background:#000;
+            box-shadow: 0 10px 22px rgba(0,0,0,.25);
+        }
+        .mosaic img{ width:100%; height:100%; object-fit:cover; filter:brightness(.85) }
+        .mosaic .caption{
+            position:absolute; left:14px; bottom:12px; color:#fff; font-weight:800; text-transform:uppercase; letter-spacing:.4px;
+            text-shadow: 0 1px 0 rgba(0,0,0,.6);
         }
 
-        /* BLOQUES */
-        .section-muted{ background: var(--c-soft); }
-        .title-underline{ border-bottom: 3px solid var(--c-yellow); display:inline-block; padding-bottom:4px; }
-        .card.featured{ border:1px solid var(--c-yellow); box-shadow:0 10px 24px rgba(0,0,0,.06); }
-        .icon-bullet{ font-size:2rem; line-height:1; }
+        /* Formulario visita */
+        .visit-card{ background:#0f0f15; border:1px solid rgba(255,255,255,.08); }
+        .visit-card .input, .visit-card .textarea{ background:#0c0c12; color:var(--ink); border-color:#1e1e2a }
+        .visit-card .input::placeholder{ color:#7f7f8f }
+        .btn-outline-accent{ background:transparent; border:2px solid var(--accent); color:var(--accent); border-radius:999px; font-weight:800 }
+        .btn-outline-accent:hover{ background:var(--accent); color:#151515 }
 
-        /* PROFESIONALES */
-        .pro-card .avatar{
-            width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px;
-            border:3px solid var(--c-yellow);
-        }
-        .pro-card .role{ color:#b38800; font-weight:800; letter-spacing:.3px; }
-
-        /* VISITA */
-        .visit-card .input, .visit-card .textarea{ background:#f8f8f8 }
-        .visit-card .button{ border-radius: 999px; padding:.9rem 1.4rem; font-weight:800 }
-
-        /* util */
-        .is-yellow{ color: var(--c-yellow) }
-        .is-border-yellow{ border:2px solid var(--c-yellow) }
+        .section-dark{ background:#0d0d13 }
+        .muted{ color:var(--muted) }
     </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar is-glassy is-transparent" role="navigation" aria-label="main navigation">
+<nav class="navbar is-darkglass" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item brand-title" href="#">TÍTULO DE TU SITIO</a>
@@ -98,7 +107,7 @@
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <span class="mr-2">🛒 <strong class="is-yellow">0</strong></span>
+                    <span class="mr-2">🛒 <strong style="color:var(--accent)">0</strong></span>
                     <a class="button btn-pill ml-3" href="#visita">ÚNETE A NUESTRO GIMNASIO</a>
                 </div>
             </div>
@@ -109,93 +118,80 @@
 <!-- HERO -->
 <section class="hero hero-landing">
     <div class="container hero-inner">
-        <h1 class="headline-giant">
-            Entrena en el horario<br>
-            que más te convenga.
-        </h1>
+        <div>
+            <h1 class="headline-giant">Entrena en el horario<br>que más te convenga.</h1>
+            <p class="lead">Resultados reales, equipo profesional y un espacio pensado para ti.</p>
+        </div>
     </div>
 </section>
 
-<!-- PLANES -->
+<!-- PLANES (tarjetas visuales) -->
 <section id="planes" class="section">
     <div class="container">
         <h2 class="title is-3 title-underline">Nuestros planes</h2>
         <div class="columns is-variable is-6">
             <div class="column">
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="title is-4">Básico</h3>
-                        <ul class="content">
-                            <li>Rutinas y menús estándar.</li>
-                            <li>Acceso en horarios generales.</li>
-                            <li>Soporte esencial.</li>
-                        </ul>
-                        <a class="button is-white is-border-yellow is-fullwidth">Elegir Básico</a>
+                <div class="vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Básico">
+                    <div class="overlay"></div>
+                    <div class="label">
+                        <span>Básico</span>
+                        <span class="chip">Acceso esencial</span>
                     </div>
                 </div>
             </div>
             <div class="column">
-                <div class="card featured">
-                    <div class="card-content">
-                        <h3 class="title is-4">Premium</h3>
-                        <ul class="content">
-                            <li>Rutinas personalizadas (entrenador).</li>
-                            <li>Dieta personalizada (nutriólogo).</li>
-                            <li>Seguimiento y reportes de progreso.</li>
-                        </ul>
-                        <a class="button is-warning is-fullwidth">Elegir Premium</a>
+                <div class="vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Premium">
+                    <div class="overlay"></div>
+                    <div class="label">
+                        <span>Premium</span>
+                        <span class="chip">Personalizado</span>
                     </div>
                 </div>
             </div>
             <div class="column">
-                <div class="card">
-                    <div class="card-content">
-                        <h3 class="title is-4">Empresarial</h3>
-                        <ul class="content">
-                            <li>Descuentos por volumen.</li>
-                            <li>Reportes para RRHH.</li>
-                            <li>Activaciones y charlas in situ.</li>
-                        </ul>
-                        <a class="button is-white is-border-yellow is-fullwidth">Solicitar información</a>
+                <div class="vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/669577/pexels-photo-669577.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Empresarial">
+                    <div class="overlay"></div>
+                    <div class="label">
+                        <span>Empresarial</span>
+                        <span class="chip">Equipos & RRHH</span>
                     </div>
                 </div>
             </div>
         </div>
-        <p class="has-text-grey">* El acceso a planes personalizados requiere membresía activa al día.</p>
+        <p class="muted">* Los planes personalizados requieren membresía activa al día.</p>
     </div>
 </section>
 
-<!-- BENEFICIOS -->
-<section id="beneficios" class="section section-muted">
+<!-- BENEFICIOS (mosaico visual, sin bullets) -->
+<section id="beneficios" class="section section-dark">
     <div class="container">
         <h2 class="title is-3 title-underline">Beneficios</h2>
-        <div class="columns is-variable is-6">
+        <div class="columns mosaic is-variable is-4">
             <div class="column">
-                <div class="box">
-                    <div class="icon-bullet">✅</div>
-                    <h3 class="title is-5 mt-2">Programas efectivos</h3>
-                    <p>Protocolos de entrenamiento organizados por objetivos y niveles.</p>
+                <div class="tile">
+                    <img src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Programas efectivos">
+                    <span class="caption">Programas efectivos</span>
                 </div>
             </div>
             <div class="column">
-                <div class="box">
-                    <div class="icon-bullet">🧠</div>
-                    <h3 class="title is-5 mt-2">Profesionales certificados</h3>
-                    <p>Entrenadores y nutriólogos con experiencia real y resultados.</p>
+                <div class="tile">
+                    <img src="https://images.pexels.com/photos/5327483/pexels-photo-5327483.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Profesionales certificados">
+                    <span class="caption">Profesionales certificados</span>
                 </div>
             </div>
             <div class="column">
-                <div class="box">
-                    <div class="icon-bullet">💳</div>
-                    <h3 class="title is-5 mt-2">Pagos simples y claros</h3>
-                    <p>Sin letras pequeñas: renueva, pausa o mejora tu plan cuando lo necesites.</p>
+                <div class="tile">
+                    <img src="https://images.pexels.com/photos/5935743/pexels-photo-5935743.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Pagos simples y claros">
+                    <span class="caption">Pagos simples y claros</span>
                 </div>
             </div>
             <div class="column">
-                <div class="box">
-                    <div class="icon-bullet">📱</div>
-                    <h3 class="title is-5 mt-2">Web y móvil</h3>
-                    <p>Accede a tu rutina y plan desde cualquier dispositivo.</p>
+                <div class="tile">
+                    <img src="https://images.pexels.com/photos/3763875/pexels-photo-3763875.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Web y móvil">
+                    <span class="caption">Web y móvil</span>
                 </div>
             </div>
         </div>
@@ -208,90 +204,55 @@
         <h2 class="title is-3 title-underline">Profesionales</h2>
         <div class="columns is-multiline">
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card pro-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://images.pexels.com/photos/4753893/pexels-photo-4753893.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Entrenador">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="role">Entrenador</p>
-                        <p class="title is-5 mb-2">Técnica & Progresión</p>
-                        <p>Diseño de rutinas, corrección de forma y planificación por fases.</p>
-                    </div>
-                </div>
+                <figure class="image is-square vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/4753893/pexels-photo-4753893.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Entrenador">
+                    <div class="overlay"></div><div class="label"><span>Entrenador</span><span class="chip">Técnica & Progresión</span></div>
+                </figure>
             </div>
-
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card pro-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://images.pexels.com/photos/3184192/pexels-photo-3184192.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Nutriólogo">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="role">Nutriólogo</p>
-                        <p class="title is-5 mb-2">Estrategia alimentaria</p>
-                        <p>Plan nutricional por objetivos, gustos y presupuesto real.</p>
-                    </div>
-                </div>
+                <figure class="image is-square vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/3184192/pexels-photo-3184192.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Nutriólogo">
+                    <div class="overlay"></div><div class="label"><span>Nutriólogo</span><span class="chip">Plan alimentario</span></div>
+                </figure>
             </div>
-
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card pro-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://images.pexels.com/photos/4506109/pexels-photo-4506109.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fisioterapeuta">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="role">Fisioterapeuta</p>
-                        <p class="title is-5 mb-2">Prevención & Recuperación</p>
-                        <p>Evaluación de movilidad, rehabilitación y ajustes de carga.</p>
-                    </div>
-                </div>
+                <figure class="image is-square vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/4506109/pexels-photo-4506109.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Fisioterapeuta">
+                    <div class="overlay"></div><div class="label"><span>Fisioterapeuta</span><span class="chip">Prevención</span></div>
+                </figure>
             </div>
-
             <div class="column is-12-mobile is-6-tablet is-3-desktop">
-                <div class="card pro-card">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img class="avatar" src="https://images.pexels.com/photos/8867431/pexels-photo-8867431.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Coordinación">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <p class="role">Coordinación</p>
-                        <p class="title is-5 mb-2">Membresías & Operación</p>
-                        <p>Altas, pagos y soporte. Todo para que entrenes sin fricciones.</p>
-                    </div>
-                </div>
+                <figure class="image is-square vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/8867431/pexels-photo-8867431.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Coordinación">
+                    <div class="overlay"></div><div class="label"><span>Coordinación</span><span class="chip">Membresías</span></div>
+                </figure>
             </div>
         </div>
     </div>
 </section>
 
 <!-- INSTALACIONES (galería) -->
-<section id="instalaciones" class="section section-muted">
+<section id="instalaciones" class="section section-dark">
     <div class="container">
         <h2 class="title is-3 title-underline">Instalaciones</h2>
-        <div class="columns">
+        <div class="columns mosaic">
             <div class="column">
-                <figure class="image is-16by9">
-                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg" alt="Dumbbells">
-                </figure>
-                <p class="has-text-weight-semibold mt-2">Área de fuerza</p>
+                <div class="tile">
+                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg" alt="Área de fuerza">
+                    <span class="caption">Área de fuerza</span>
+                </div>
             </div>
             <div class="column">
-                <figure class="image is-16by9">
-                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20241224/pngtree-a-fully-equipped-gym-with-dumbbells-weight-machines-and-cardio-equipment-image_16843660.jpg" alt="Máquinas y cardio">
-                </figure>
-                <p class="has-text-weight-semibold mt-2">Máquinas & Cardio</p>
+                <div class="tile">
+                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20241224/pngtree-a-fully-equipped-gym-with-dumbbells-weight-machines-and-cardio-equipment-image_16843660.jpg" alt="Máquinas & Cardio">
+                    <span class="caption">Máquinas & Cardio</span>
+                </div>
             </div>
             <div class="column">
-                <figure class="image is-16by9">
+                <div class="tile">
                     <img src="https://t3.ftcdn.net/jpg/08/27/87/60/360_F_827876077_k0EWo3jSiWZPR8fRgsSbZFT9SkrozNuj.jpg" alt="Ambiente moderno">
-                </figure>
-                <p class="has-text-weight-semibold mt-2">Ambiente moderno</p>
+                    <span class="caption">Ambiente moderno</span>
+                </div>
             </div>
         </div>
     </div>
@@ -301,72 +262,52 @@
 <section id="visita" class="section">
     <div class="container">
         <h2 class="title is-3 title-underline">Programa una visita</h2>
-
         <div class="columns is-variable is-7">
-            <!-- Copy -->
             <div class="column is-12-tablet is-6-desktop">
-                <p class="is-size-5" style="max-width: 46ch">
-                    Haz un recorrido gratuito de 30 minutos por cualquiera de nuestras sedes para decidir si este es el gimnasio correcto para ti.
-                    Podrás probar equipos, observar clases y resolver tus dudas.
+                <p class="is-size-5 muted" style="max-width: 46ch">
+                    Haz un recorrido gratuito de 30 minutos por cualquiera de nuestras sedes.
+                    Prueba equipos, observa clases y despeja tus dudas.
                 </p>
             </div>
-
-            <!-- Formulario -->
             <div class="column is-12-tablet is-6-desktop">
                 <form class="box visit-card">
                     <div class="columns">
                         <div class="column">
-                            <div class="field">
-                                <label class="label">Nombre <span class="has-text-grey is-size-7">(obligatorio)</span></label>
-                                <div class="control"><input class="input" name="nombre" required /></div>
-                            </div>
+                            <div class="field"><label class="label">Nombre</label><div class="control"><input class="input" name="nombre" required /></div></div>
                         </div>
                         <div class="column">
-                            <div class="field">
-                                <label class="label">Apellido</label>
-                                <div class="control"><input class="input" name="apellido"/></div>
-                            </div>
+                            <div class="field"><label class="label">Apellido</label><div class="control"><input class="input" name="apellido"/></div></div>
                         </div>
                     </div>
-
-                    <div class="field">
-                        <label class="label">Correo electrónico <span class="has-text-grey is-size-7">(obligatorio)</span></label>
-                        <div class="control"><input class="input" type="email" name="email" required /></div>
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Fecha <span class="has-text-grey is-size-7">(obligatorio)</span></label>
-                        <div class="control"><input class="input" type="date" name="fecha" required /></div>
-                    </div>
-
-                    <div class="field mt-5">
-                        <button type="submit" class="button is-white is-border-yellow is-yellow">ENVIAR</button>
-                    </div>
+                    <div class="field"><label class="label">Correo electrónico</label><div class="control"><input class="input" type="email" name="email" required /></div></div>
+                    <div class="field"><label class="label">Fecha</label><div class="control"><input class="input" type="date" name="fecha" required /></div></div>
+                    <div class="field mt-5"><button type="submit" class="button btn-outline-accent">ENVIAR</button></div>
                 </form>
             </div>
         </div>
-
     </div>
 </section>
 
 <!-- CTA FINAL -->
-<section class="section section-muted">
+<section class="section section-dark">
     <div class="container">
-        <div class="box has-text-centered" style="border:1px solid #ececec">
-            <h3 class="title is-4" style="font-weight:900">Tu mejor versión comienza hoy</h3>
-            <p>Únete y recibe tu plan inicial en minutos.</p>
-            <div class="buttons is-centered mt-4">
-                <a class="button is-warning">Registrarme</a>
-                <a class="button is-white is-border-yellow">Agendar visita</a>
+        <div class="box" style="background:#0f0f15; border:1px solid rgba(255,255,255,.08)">
+            <div class="has-text-centered">
+                <h3 class="title is-4" style="font-weight:900; color:var(--ink)">Tu mejor versión comienza hoy</h3>
+                <p class="muted">Únete y recibe tu plan inicial en minutos.</p>
+                <div class="buttons is-centered mt-4">
+                    <a class="button is-warning">Registrarme</a>
+                    <a class="button btn-outline-accent">Agendar visita</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
+<footer class="footer" style="background:#0b0b12; border-top:1px solid rgba(255,255,255,.06)">
     <div class="content has-text-centered">
-        <p><strong>Proyecto Académico — Plataforma de Gimnasio</strong> · 2025</p>
+        <p class="muted"><strong style="color:var(--ink)">Proyecto Académico — Plataforma de Gimnasio</strong> · 2025</p>
     </div>
 </footer>
 
@@ -381,7 +322,7 @@
         }));
     });
 
-    // Rotación de fondo del HERO
+    // Rotación de fondo del HERO (tus 3 imágenes)
     const imgs = [
         'https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg',
         'https://png.pngtree.com/thumb_back/fh260/background/20241224/pngtree-a-fully-equipped-gym-with-dumbbells-weight-machines-and-cardio-equipment-image_16843660.jpg',
