@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Recuperar contraseña — Gimnasio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        :root{--bg:#0a0a0e;--ink:#f2f2f2;--muted:#9aa;--accent:#ffc107}
+        html,body{background:var(--bg);color:var(--ink)}
+        a{color:var(--accent)}
+        .card{background:#0f0f15;border:1px solid rgba(255,255,255,.08)}
+        .input,.button{border-radius:10px}
+        .button.is-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:800}
+        .navbar{background:#0b0b12;border-bottom:1px solid rgba(255,255,255,.06)}
+        .brand{color:var(--accent);font-weight:900}
+        .help{color:var(--muted)}
+    </style></head><body>
+
+<nav class="navbar" role="navigation">
+    <div class="container">
+        <div class="navbar-brand"><a class="navbar-item brand" href="/">TÍTULO DE TU SITIO</a></div>
+    </div>
+</nav>
+
+<section class="section">
+    <div class="container" style="max-width:560px">
+        <h1 class="title is-3">Recuperar contraseña</h1>
+        <p class="subtitle is-6" style="color:var(--muted)">Te enviaremos un enlace para restablecer tu contraseña.</p>
+
+        <div class="card p-5">
+            <form>
+                <div class="field">
+                    <label class="label">Correo</label>
+                    <div class="control"><input class="input" type="email" placeholder="tucorreo@ejemplo.com" required></div>
+                    <p class="help">Usa el correo con el que te registraste.</p>
+                </div>
+                <div class="field">
+                    <button class="button is-accent is-fullwidth" type="submit">Enviar enlace</button>
+                </div>
+            </form>
+            <p class="has-text-centered mt-4" style="color:var(--muted)">
+                ¿Recordaste tu contraseña? <a href="/login.html"><strong>Iniciar sesión</strong></a>
+            </p>
+        </div>
+
+        <p class="has-text-centered mt-5"><a href="/">← Volver al inicio</a></p>
+    </div>
+</section>
+</body></html>

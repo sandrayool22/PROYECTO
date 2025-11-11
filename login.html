@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Iniciar sesión — Gimnasio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        :root{--bg:#0a0a0e;--ink:#f2f2f2;--muted:#9aa;--accent:#ffc107}
+        html,body{background:var(--bg);color:var(--ink)}
+        a{color:var(--accent)}
+        .card{background:#0f0f15;border:1px solid rgba(255,255,255,.08)}
+        .input,.button{border-radius:10px}
+        .button.is-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:800}
+        .navbar{background:#0b0b12;border-bottom:1px solid rgba(255,255,255,.06)}
+        .brand{color:var(--accent);font-weight:900}
+    </style></head><body>
+
+<nav class="navbar" role="navigation">
+    <div class="container">
+        <div class="navbar-brand"><a class="navbar-item brand" href="/">TÍTULO DE TU SITIO</a></div>
+    </div>
+</nav>
+
+<section class="section">
+    <div class="container" style="max-width:560px">
+        <h1 class="title is-3">Iniciar sesión</h1>
+        <p class="subtitle is-6" style="color:var(--muted)">Accede para ver tus rutinas, nutrición y pagos.</p>
+
+        <div class="card p-5">
+            <form>
+                <div class="field">
+                    <label class="label">Correo</label>
+                    <div class="control"><input class="input" type="email" placeholder="tucorreo@ejemplo.com" required autocomplete="username"></div>
+                </div>
+                <div class="field">
+                    <label class="label">Contraseña</label>
+                    <div class="control"><input class="input" type="password" placeholder="••••••••" required autocomplete="current-password"></div>
+                </div>
+                <div class="field is-flex is-justify-content-space-between is-align-items-center">
+                    <label class="checkbox" style="color:var(--muted)"><input type="checkbox"> Recuérdame</label>
+                    <a href="/forgot.html">¿Olvidaste tu contraseña?</a>
+                </div>
+                <div class="field">
+                    <button class="button is-accent is-fullwidth" type="submit">Entrar</button>
+                </div>
+            </form>
+            <p class="has-text-centered mt-4" style="color:var(--muted)">¿No tienes cuenta?
+                <a href="/signup.html"><strong>Crear una cuenta</strong></a>
+            </p>
+        </div>
+
+        <p class="has-text-centered mt-5"><a href="/">← Volver al inicio</a></p>
+    </div>
+</section>
+</body></html>

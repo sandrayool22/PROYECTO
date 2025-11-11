@@ -7,24 +7,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
         :root{
-            --bg:#0a0a0e;          /* fondo negro */
-            --ink:#f2f2f2;         /* texto claro */
-            --muted:#c8c8c8;       /* texto secundario */
-            --accent:#ffc107;      /* amarillo acordado */
-            --card:#111118;        /* tarjetas oscuras */
+            --bg:#0a0a0e; --ink:#f2f2f2; --muted:#c8c8c8; --accent:#ffc107; --card:#111118;
         }
         html,body{background:var(--bg); color:var(--ink)}
-        .title, .subtitle{color:var(--ink)}
+        .title,.subtitle{color:var(--ink)}
         .title-underline{ border-bottom:3px solid var(--accent); display:inline-block; padding-bottom:4px; }
 
         /* Navbar */
-        .navbar.is-darkglass{
-            background: rgba(10,10,14,.7);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,.06);
-        }
-        .navbar .navbar-item,
-        .navbar .navbar-link{ color: var(--accent); font-weight:700; letter-spacing:.3px }
+        .navbar.is-darkglass{background:rgba(10,10,14,.7); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,.06)}
+        .navbar .navbar-item,.navbar .navbar-link{ color:var(--accent); font-weight:700; letter-spacing:.3px }
         .brand-title{ color:var(--accent); font-weight:900; font-size:1.8rem; letter-spacing:1px }
         .btn-pill{ border:2px solid var(--accent); color:var(--accent); border-radius:999px; padding:.7rem 1.2rem; font-weight:800; background:transparent }
         .btn-pill:hover{ background:var(--accent); color:#151515 }
@@ -33,51 +24,31 @@
         .hero-landing{
             min-height: calc(100vh - 56px);
             background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg');
-            background-size: cover; background-position: center; position: relative;
-            transition: background-image 1s ease-in-out;
+            background-size:cover; background-position:center; position:relative; transition:background-image 1s ease-in-out;
         }
-        .hero-landing::after{
-            content:""; position:absolute; inset:0;
-            background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65));
-            pointer-events:none;
-        }
+        .hero-landing::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65))}
         .hero-inner{ position:relative; z-index:1; min-height: calc(100vh - 56px); display:flex; align-items:flex-end; padding: 2rem 1rem }
         .headline-giant{
-            color: var(--accent); font-weight:900; line-height:.9; text-transform:uppercase; letter-spacing:.5px;
-            font-size: clamp(2.4rem, 9vw, 6rem); text-shadow: 0 2px 0 rgba(0,0,0,.55); margin-bottom: .5rem;
+            color:var(--accent); font-weight:900; line-height:.9; text-transform:uppercase; letter-spacing:.5px;
+            font-size: clamp(2.4rem, 9vw, 6rem); text-shadow:0 2px 0 rgba(0,0,0,.55); margin-bottom:.5rem;
         }
         .lead{ color:var(--muted) }
 
-        /* Tarjetas visuales (sin bullets) */
-        .vcard{
-            position:relative; border-radius:14px; overflow:hidden; background:var(--card);
-            box-shadow: 0 10px 24px rgba(0,0,0,.35);
-        }
-        .vcard .media-img{ width:100%; height:240px; background:#000; object-fit:cover; }
-        .vcard .overlay{
-            position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.65) 60%);
-        }
-        .vcard .label{
-            position:absolute; left:16px; bottom:16px; right:16px;
-            color:#fff; font-weight:900; text-transform:uppercase; letter-spacing:.5px; font-size:1.2rem;
-            display:flex; justify-content:space-between; align-items:center;
-        }
+        /* Tarjetas visuales */
+        .vcard{ position:relative; border-radius:14px; overflow:hidden; background:var(--card); box-shadow:0 10px 24px rgba(0,0,0,.35) }
+        .vcard .media-img{ width:100%; height:240px; object-fit:cover }
+        .vcard .overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.65) 60%) }
+        .vcard .label{ position:absolute; left:16px; bottom:16px; right:16px; color:#fff; font-weight:900; text-transform:uppercase; letter-spacing:.5px; font-size:1.2rem; display:flex; justify-content:space-between; align-items:center }
         .chip{ background:rgba(255,193,7,.95); color:#111; padding:.25rem .6rem; border-radius:999px; font-weight:800; font-size:.8rem }
 
-        /* Mosaico visual (beneficios / instalaciones) */
-        .mosaic .tile{
-            position:relative; border-radius:14px; overflow:hidden; height:220px; background:#000;
-            box-shadow: 0 10px 22px rgba(0,0,0,.25);
-        }
+        /* Mosaico */
+        .mosaic .tile{ position:relative; border-radius:14px; overflow:hidden; height:220px; background:#000; box-shadow:0 10px 22px rgba(0,0,0,.25) }
         .mosaic img{ width:100%; height:100%; object-fit:cover; filter:brightness(.85) }
-        .mosaic .caption{
-            position:absolute; left:14px; bottom:12px; color:#fff; font-weight:800; text-transform:uppercase; letter-spacing:.4px;
-            text-shadow: 0 1px 0 rgba(0,0,0,.6);
-        }
+        .mosaic .caption{ position:absolute; left:14px; bottom:12px; color:#fff; font-weight:800; text-transform:uppercase; letter-spacing:.4px; text-shadow:0 1px 0 rgba(0,0,0,.6) }
 
-        /* Formulario visita */
-        .visit-card{ background:#0f0f15; border:1px solid rgba(255,255,255,.08); }
-        .visit-card .input, .visit-card .textarea{ background:#0c0c12; color:var(--ink); border-color:#1e1e2a }
+        /* Visita */
+        .visit-card{ background:#0f0f15; border:1px solid rgba(255,255,255,.08) }
+        .visit-card .input,.visit-card .textarea{ background:#0c0c12; color:var(--ink); border-color:#1e1e2a }
         .visit-card .input::placeholder{ color:#7f7f8f }
         .btn-outline-accent{ background:transparent; border:2px solid var(--accent); color:var(--accent); border-radius:999px; font-weight:800 }
         .btn-outline-accent:hover{ background:var(--accent); color:#151515 }
@@ -92,7 +63,7 @@
 <nav class="navbar is-darkglass" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item brand-title" href="#">TÍTULO DE TU SITIO</a>
+            <a class="navbar-item brand-title" href="/">DEBUG Gym</a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
                 <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
             </a>
@@ -107,8 +78,8 @@
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <span class="mr-2">🛒 <strong style="color:var(--accent)">0</strong></span>
-                    <a class="button btn-pill ml-3" href="#visita">ÚNETE A NUESTRO GIMNASIO</a>
+                    <a class="button btn-pill" href="/signup.html">Registrarse</a>
+                    <a class="button btn-pill ml-3" href="/login.html">Iniciar sesión</a>
                 </div>
             </div>
         </div>
@@ -125,7 +96,7 @@
     </div>
 </section>
 
-<!-- PLANES (tarjetas visuales) -->
+<!-- PLANES -->
 <section id="planes" class="section">
     <div class="container">
         <h2 class="title is-3 title-underline">Nuestros planes</h2>
@@ -134,30 +105,29 @@
                 <div class="vcard">
                     <img class="media-img" src="https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Básico">
                     <div class="overlay"></div>
-                    <div class="label">
-                        <span>Básico</span>
-                        <span class="chip">Acceso esencial</span>
-                    </div>
+                    <div class="label"><span>Básico</span><span class="chip">Acceso esencial</span></div>
                 </div>
             </div>
             <div class="column">
                 <div class="vcard">
                     <img class="media-img" src="https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Premium">
                     <div class="overlay"></div>
-                    <div class="label">
-                        <span>Premium</span>
-                        <span class="chip">Personalizado</span>
-                    </div>
+                    <div class="label"><span>Premium</span><span class="chip">Personalizado</span></div>
                 </div>
             </div>
-
+            <div class="column">
+                <div class="vcard">
+                    <img class="media-img" src="https://images.pexels.com/photos/669577/pexels-photo-669577.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Empresarial">
+                    <div class="overlay"></div>
+                    <div class="label"><span>Empresarial</span><span class="chip">Equipos & RRHH</span></div>
+                </div>
             </div>
         </div>
         <p class="muted">* Los planes personalizados requieren membresía activa al día.</p>
     </div>
 </section>
 
-<!-- BENEFICIOS (mosaico visual, sin bullets) -->
+<!-- BENEFICIOS (mosaico) -->
 <section id="beneficios" class="section section-dark">
     <div class="container">
         <h2 class="title is-3 title-underline">Beneficios</h2>
@@ -223,7 +193,7 @@
     </div>
 </section>
 
-<!-- INSTALACIONES (galería) -->
+<!-- INSTALACIONES -->
 <section id="instalaciones" class="section section-dark">
     <div class="container">
         <h2 class="title is-3 title-underline">Instalaciones</h2>
@@ -256,7 +226,7 @@
         <h2 class="title is-3 title-underline">Programa una visita</h2>
         <div class="columns is-variable is-7">
             <div class="column is-12-tablet is-6-desktop">
-                <p class="is-size-5 muted" style="max-width: 46ch">
+                <p class="is-size-5 muted" style="max-width:46ch">
                     Haz un recorrido gratuito de 30 minutos por cualquiera de nuestras sedes.
                     Prueba equipos, observa clases y despeja tus dudas.
                 </p>
@@ -265,14 +235,14 @@
                 <form class="box visit-card">
                     <div class="columns">
                         <div class="column">
-                            <div class="field"><label class="label">Nombre</label><div class="control"><input class="input" name="nombre" required /></div></div>
+                            <div class="field"><label class="label">Nombre</label><div class="control"><input class="input" name="nombre" required></div></div>
                         </div>
                         <div class="column">
-                            <div class="field"><label class="label">Apellido</label><div class="control"><input class="input" name="apellido"/></div></div>
+                            <div class="field"><label class="label">Apellido</label><div class="control"><input class="input" name="apellido"></div></div>
                         </div>
                     </div>
-                    <div class="field"><label class="label">Correo electrónico</label><div class="control"><input class="input" type="email" name="email" required /></div></div>
-                    <div class="field"><label class="label">Fecha</label><div class="control"><input class="input" type="date" name="fecha" required /></div></div>
+                    <div class="field"><label class="label">Correo electrónico</label><div class="control"><input class="input" type="email" name="email" required></div></div>
+                    <div class="field"><label class="label">Fecha</label><div class="control"><input class="input" type="date" name="fecha" required></div></div>
                     <div class="field mt-5"><button type="submit" class="button btn-outline-accent">ENVIAR</button></div>
                 </form>
             </div>
@@ -285,11 +255,11 @@
     <div class="container">
         <div class="box" style="background:#0f0f15; border:1px solid rgba(255,255,255,.08)">
             <div class="has-text-centered">
-                <h3 class="title is-4" style="font-weight:900; color:var(--ink)">Tu mejor versión comienza hoy</h3>
+                <h3 class="title is-4" style="font-weight:900">Tu mejor versión comienza hoy</h3>
                 <p class="muted">Únete y recibe tu plan inicial en minutos.</p>
                 <div class="buttons is-centered mt-4">
-                    <a class="button is-warning">Registrarme</a>
-                    <a class="button btn-outline-accent">Agendar visita</a>
+                    <a class="button is-warning" href="/signup.html">Registrarme</a>
+                    <a class="button btn-outline-accent" href="#visita">Agendar visita</a>
                 </div>
             </div>
         </div>
@@ -314,7 +284,7 @@
         }));
     });
 
-    // Rotación de fondo del HERO (tus 3 imágenes)
+    // Rotación de fondo del HERO (3 imágenes)
     const imgs = [
         'https://png.pngtree.com/thumb_back/fh260/background/20240329/pngtree-rows-of-dumbbells-in-the-gym-image_15662386.jpg',
         'https://png.pngtree.com/thumb_back/fh260/background/20241224/pngtree-a-fully-equipped-gym-with-dumbbells-weight-machines-and-cardio-equipment-image_16843660.jpg',
