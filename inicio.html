@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DEBUG Gym — Panel del Cliente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        :root{
+            --bg:#0a0a0e; --ink:#f2f2f2; --muted:#b7b7c2; --accent:#ffc107; --card:#111118; --line:#1b1b25; --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444;
+        }
+        html,body{background:var(--bg);color:var(--ink)}
+        .navbar{background:#0b0b12;border-bottom:1px solid rgba(255,255,255,.06)}
+        .brand{color:var(--accent);font-weight:900;letter-spacing:.6px}
+        .section{padding:2.75rem 1.25rem}
+        .cardx{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.33)}
+        .kicker{color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+        .muted{color:var(--muted)}
+        .badge{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.35rem .7rem;font-weight:800;font-size:.8rem;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+        .badge.ok{border-color:rgba(34,197,94,.35);color:#d1fadf}
+        .badge.warn{border-color:rgba(245,158,11,.35);color:#fff7d6}
+        .badge.danger{border-color:rgba(239,68,68,.35);color:#ffe1e1}
+        .btn-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:900;border-radius:12px}
+        .btn-ghost{background:transparent;border:2px solid var(--accent);color:var(--accent);font-weight:900;border-radius:12px}
+        .tile-app{display:flex;flex-direction:column;gap:.65rem;padding:1.2rem}
+        .tile-app .title{margin-bottom:.2rem}
+        .icon-round{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#1a1a22;border:1px solid var(--line)}
+        .grid{display:grid;gap:1rem}
+        @media(min-width:769px){.grid{grid-template-columns:repeat(12,1fr)}}
+        .hover-up{transition:.2s transform ease, .2s box-shadow ease}
+        .hover-up:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.44)}
+        hr{background:var(--line);height:1px;border:none;margin:1rem 0}
+        .small{font-size:.9rem}
+        a{color:var(--accent)}
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" role="navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item brand" href="https://sandrayool22.github.io/PROYECTO/">DEBUG Gym</a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
+                <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMain" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="./index.html">Dashboard</a>
+                <a class="navbar-item" href="./rutinas.html">Rutinas</a>
+                <a class="navbar-item" href="./dietas.html">Nutrición</a>
+                <a class="navbar-item" href="./progreso.html">Progreso</a>
+                <a class="navbar-item" href="./pagos.html">Pagos</a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <span id="navPlan" class="badge">—</span>
+                    <a id="btnSalir" class="button is-small btn-ghost ml-3">Salir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="section">
+    <div class="container">
+
+        <!-- Encabezado -->
+        <div class="columns is-vcentered">
+            <div class="column">
+                <span class="kicker">Bienvenido</span>
+                <h1 class="title is-3" id="hNombre">Hola, Atleta.</h1>
+                <p class="muted">Aquí ves tu estado de membresía, accesos rápidos y próximos pasos.</p>
+            </div>
+            <div class="column is-narrow">
+                <div id="chipMembresia" class="badge ok">Membresía: —</div>
+            </div>
+        </div>
+
+        <!-- Alert de estado -->
+        <div id="alertEstado" class="notification is-hidden"></div>
+
+        <!-- Tarjeta de resumen -->
+        <div class="cardx p-5 mb-5">
+            <div class="columns">
+                <div class="column">
+                    <p class="small muted">Plan actual</p>
+                    <h3 class="title is-5" id="txtPlan">—</h3>
+                </div>
+                <div class="column">
+                    <p class="small muted">Próximo pago</p>
+                    <h3 class="title is-5" id="txtPago">—</h3>
+                </div>
+                <div class="column">
+                    <p class="small muted">Estado</p>
+                    <h3 class="title is-5" id="txtEstado">—</h3>
+                </div>
+                <div class="column is-narrow">
+                    <a class="button btn-accent" href="./pagos.html">Ir a Pagos</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accesos rápidos -->
+        <div class="grid">
+            <!-- Rutinas -->
+            <div class="cardx hover-up tile-app" style="grid-column:span 6;">
+                <div class="is-flex is-align-items-center is-justify-content-space-between">
+                    <div class="is-flex is-align-items-center" style="gap:.8rem">
+                        <div class="icon-round">🏋️</div>
+                        <div>
+                            <h4 class="title is-5">Rutinas</h4>
+                            <p class="muted small" id="rutinasDesc">—</p>
+                        </div>
+                    </div>
+                    <a class="button btn-ghost" href="./rutinas.html">Abrir</a>
+                </div>
+                <hr>
+                <div id="rutinasBadges" class="is-flex is-flex-wrap-wrap" style="gap:.5rem"></div>
+            </div>
+
+            <!-- Nutrición -->
+            <div class="cardx hover-up tile-app" style="grid-column:span 6;">
+                <div class="is-flex is-align-items-center is-justify-content-space-between">
+                    <div class="is-flex is-align-items-center" style="gap:.8rem">
+                        <div class="icon-round">🥗</div>
+                        <div>
+                            <h4 class="title is-5">Nutrición</h4>
+                            <p class="muted small" id="dietasDesc">—</p>
+                        </div>
+                    </div>
+                    <a class="button btn-ghost" href="./dietas.html">Abrir</a>
+                </div>
+                <hr>
+                <div id="dietasBadges" class="is-flex is-flex-wrap-wrap" style="gap:.5rem"></div>
+            </div>
+
+            <!-- Progreso -->
+            <div class="cardx hover-up tile-app" style="grid-column:span 6;">
+                <div class="is-flex is-align-items-center is-justify-content-space-between">
+                    <div class="is-flex is-align-items-center" style="gap:.8rem">
+                        <div class="icon-round">📈</div>
+                        <div>
+                            <h4 class="title is-5">Progreso</h4>
+                            <p class="muted small">Registra peso, medidas y % de grasa. Visualiza tu evolución.</p>
+                        </div>
+                    </div>
+                    <a class="button btn-ghost" href="./progreso.html">Abrir</a>
+                </div>
+            </div>
+
+            <!-- Pagos -->
+            <div class="cardx hover-up tile-app" style="grid-column:span 6;">
+                <div class="is-flex is-align-items-center is-justify-content-space-between">
+                    <div class="is-flex is-align-items-center" style="gap:.8rem">
+                        <div class="icon-round">💳</div>
+                        <div>
+                            <h4 class="title is-5">Pagos</h4>
+                            <p class="muted small">Consulta tu historial, estado actual y renueva tu plan.</p>
+                        </div>
+                    </div>
+                    <a class="button btn-ghost" href="./pagos.html">Abrir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nota Premium -->
+        <div id="notaPremium" class="notification is-warning is-light mt-5 is-hidden">
+            <strong>Contenido Premium:</strong> Las rutinas y dietas personalizadas requieren membresía <em>El Gran Machote</em> activa al día.
+        </div>
+
+    </div>
+</section>
+
+<footer class="footer" style="background:#0b0b12;border-top:1px solid rgba(255,255,255,.06)">
+    <div class="content has-text-centered">
+        <p class="muted">Proyecto Académico — Plataforma de Gimnasio · 2025</p>
+    </div>
+</footer>
+
+<script>
+    // --- Navbar burger
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgers=[...document.querySelectorAll('.navbar-burger')];
+        burgers.forEach(b=>b.addEventListener('click',()=> {
+            const t=document.getElementById(b.dataset.target);
+            b.classList.toggle('is-active'); if(t) t.classList.toggle('is-active');
+        }));
+    });
+
+    // --- Utilidades demo: leer URL ?plan= & ?nombre= & ?vigente=
+    const url = new URL(window.location.href);
+    const qPlan = url.searchParams.get('plan');
+    const qNom  = url.searchParams.get('nombre');
+    const qVig  = url.searchParams.get('vigente'); // "true"/"false"
+
+    // Persistir si vienen en la URL
+    if(qPlan) localStorage.setItem('plan', qPlan);
+    if(qNom)  localStorage.setItem('nombre', qNom);
+    if(qVig!==null) localStorage.setItem('vigente', qVig);
+
+    // Estado por defecto si no hay datos
+    const plan = (localStorage.getItem('plan') || 'basico').toLowerCase(); // 'basico' | 'premium'
+    const nombre = localStorage.getItem('nombre') || 'Atleta';
+    const vigente = (localStorage.getItem('vigente') ?? 'true') === 'true'; // true | false
+
+    // Piezas de UI
+    const hNombre = document.getElementById('hNombre');
+    const chip = document.getElementById('chipMembresia');
+    const navPlan = document.getElementById('navPlan');
+    const alertEstado = document.getElementById('alertEstado');
+    const txtPlan = document.getElementById('txtPlan');
+    const txtPago = document.getElementById('txtPago');
+    const txtEstado = document.getElementById('txtEstado');
+
+    const rutinasDesc = document.getElementById('rutinasDesc');
+    const dietasDesc  = document.getElementById('dietasDesc');
+    const rutinasBadges = document.getElementById('rutinasBadges');
+    const dietasBadges  = document.getElementById('dietasBadges');
+    const notaPremium = document.getElementById('notaPremium');
+
+    // Pintar encabezado
+    hNombre.textContent = `Hola, ${nombre}.`;
+
+    // Plan y membresía
+    const labelPlan = (plan === 'premium') ? 'El Gran Machote (Premium)' : 'Básico';
+    navPlan.textContent = labelPlan;
+
+    // Próximo pago (demo): si no vigente, vencido ayer; si vigente, en 30 días
+    const hoy = new Date();
+    const prox = new Date(hoy);
+    prox.setDate(hoy.getDate() + (vigente ? 30 : -1));
+    const fmt = (d)=> d.toLocaleDateString('es-GT', {year:'numeric',month:'short',day:'2-digit'});
+
+    txtPlan.textContent = labelPlan;
+    txtPago.textContent = fmt(prox);
+
+    if(vigente){
+        txtEstado.textContent = 'Activa';
+        chip.textContent = 'Membresía: Activa';
+        chip.classList.remove('warn','danger'); chip.classList.add('ok');
+        alertEstado.classList.add('is-hidden');
+    } else {
+        txtEstado.textContent = 'Vencida';
+        chip.textContent = 'Membresía: Vencida';
+        chip.classList.remove('ok'); chip.classList.add('danger');
+        alertEstado.className = 'notification is-danger is-light';
+        alertEstado.innerHTML = 'Tu membresía está vencida. <a href="./pagos.html"><strong>Renueva ahora</strong></a> para reactivar el acceso premium.';
+        alertEstado.classList.remove('is-hidden');
+    }
+
+    // Descripciones según plan
+    if(plan === 'premium'){
+        rutinasDesc.textContent = 'Rutinas personalizadas asignadas por tu instructor.';
+        dietasDesc.textContent  = 'Plan de alimentación personalizado por nutriólogo.';
+        notaPremium.classList.add('is-hidden');
+
+        rutinasBadges.innerHTML = `
+    <span class="badge ok">Personalizadas</span>
+    <span class="badge">Progresión semanal</span>
+    <span class="badge">Ajustes por instructor</span>`;
+        dietasBadges.innerHTML = `
+    <span class="badge ok">Personalizadas</span>
+    <span class="badge">Preferencias & presupuesto</span>
+    <span class="badge">Revisión nutricional</span>`;
+    } else {
+        rutinasDesc.textContent = 'Acceso a rutinas estándar y creador local (sin instructor).';
+        dietasDesc.textContent  = 'Menús estándar sugeridos.';
+        notaPremium.classList.remove('is-hidden');
+
+        rutinasBadges.innerHTML = `
+    <span class="badge">Estándar</span>
+    <span class="badge">Creador local</span>`;
+        dietasBadges.innerHTML = `
+    <span class="badge">Menús estándar</span>`;
+    }
+
+    // Salir (limpia demo y vuelve al inicio público)
+    document.getElementById('btnSalir').addEventListener('click', () => {
+        // En un backend real, aquí limpiarías el token. Para demo, limpiamos storage.
+        localStorage.removeItem('plan');
+        localStorage.removeItem('nombre');
+        localStorage.removeItem('vigente');
+        window.location.href = 'https://sandrayool22.github.io/PROYECTO/';
+    });
+</script>
+</body>
+</html>
