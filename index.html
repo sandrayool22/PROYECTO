@@ -40,6 +40,7 @@
         .vcard .overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.65) 60%) }
         .vcard .label{ position:absolute; left:16px; bottom:16px; right:16px; color:#fff; font-weight:900; text-transform:uppercase; letter-spacing:.5px; font-size:1.2rem; display:flex; justify-content:space-between; align-items:center }
         .chip{ background:rgba(255,193,7,.95); color:#111; padding:.25rem .6rem; border-radius:999px; font-weight:800; font-size:.8rem }
+        .vcard .content-lite{ padding:1rem 1.1rem 1.2rem; color:var(--muted); font-size:.95rem }
 
         /* Mosaico */
         .mosaic .tile{ position:relative; border-radius:14px; overflow:hidden; height:220px; background:#000; box-shadow:0 10px 22px rgba(0,0,0,.25) }
@@ -101,23 +102,36 @@
     <div class="container">
         <h2 class="title is-3 title-underline">Nuestros planes</h2>
         <div class="columns is-variable is-6">
+            <!-- Básico -->
             <div class="column">
                 <div class="vcard">
                     <img class="media-img" src="https://images.pexels.com/photos/3837781/pexels-photo-3837781.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Básico">
                     <div class="overlay"></div>
-                    <div class="label"><span>Básico</span><span class="chip">Acceso esencial</span></div>
+                    <div class="label">
+                        <span>Básico</span>
+                        <span class="chip">Acceso esencial</span>
+                    </div>
+                    <div class="content-lite">
+                        Rutinas y menús <strong>estándar</strong>. Posibilidad de <strong>crear rutinas locales</strong> sin intervención de instructores. Soporte esencial.
+                    </div>
                 </div>
             </div>
+            <!-- Premium -->
             <div class="column">
                 <div class="vcard">
-                    <img class="media-img" src="https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Plan Premium">
+                    <img class="media-img" src="https://images.pexels.com/photos/416809/pexels-photo-416809.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="El Gran Machote (Premium)">
                     <div class="overlay"></div>
-                    <div class="label"><span>Premium</span><span class="chip">Personalizado</span></div>
+                    <div class="label">
+                        <span>El Gran Machote</span>
+                        <span class="chip">Premium</span>
+                    </div>
+                    <div class="content-lite">
+                        <strong>Rutinas personalizadas</strong> por instructor y <strong>dietas personalizadas</strong> por nutriólogo. <strong>Seguimiento y reportes de progreso</strong>. Acceso condicionado a <strong>membresía al día</strong>.
+                    </div>
                 </div>
             </div>
-
         </div>
-        <p class="muted">* Los planes personalizados requieren membresía activa al día.</p>
+        <p class="muted">* El acceso a rutinas/dietas personalizadas requiere membresía premium activa.</p>
     </div>
 </section>
 
