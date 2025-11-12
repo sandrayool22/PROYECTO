@@ -194,7 +194,7 @@
     if(qVig!==null) localStorage.setItem('vigente', qVig);
 
     // Estado por defecto si no hay datos
-    const plan = (localStorage.getItem('plan') || 'basico').toLowerCase(); // 'basico' | 'premium'
+    const plan = (localStorage.getItem('plan') || 'premium').toLowerCase(); // 'basico' | 'premium'
     const nombre = localStorage.getItem('nombre') || 'Atleta';
     const vigente = (localStorage.getItem('vigente') ?? 'true') === 'true'; // true | false
 
