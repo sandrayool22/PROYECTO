@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DEBUG Gym — Rutinas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        :root{ --bg:#0a0a0e; --ink:#f2f2f2; --muted:#b7b7c2; --accent:#ffc107; --card:#111118; --line:#1b1b25; }
+        html,body{background:var(--bg);color:var(--ink)}
+        .navbar{background:#0b0b12;border-bottom:1px solid rgba(255,255,255,.06)}
+        .brand{color:var(--accent);font-weight:900;letter-spacing:.6px}
+        .section{padding:2.5rem 1.25rem}
+        .title,.subtitle{color:var(--ink)}
+        .muted{color:var(--muted)}
+        .tabs.is-toggle li.is-active a{background:var(--accent);color:#111}
+        .cardx{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.33);overflow:hidden}
+        .grid{display:grid;gap:1rem}
+        @media(min-width:769px){.grid{grid-template-columns:repeat(12,1fr)}}
+        .tilex{grid-column:span 6}
+        .thumb{width:100%;height:160px;object-fit:cover;background:#0d0d14}
+        .box-clean{background:transparent;border:1px dashed var(--line);border-radius:12px}
+        .badge{display:inline-flex;gap:.4rem;border-radius:999px;padding:.35rem .7rem;font-weight:800;font-size:.8rem;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+        .lock{position:relative}
+        .lock::after{content:"🔒 Premium";position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.6);color:#fff;font-weight:900;letter-spacing:.5px}
+        .btn-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:900;border-radius:12px}
+        .btn-ghost{background:transparent;border:2px solid var(--accent);color:var(--accent);font-weight:900;border-radius:12px}
+        .pill{border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem}
+        hr{background:var(--line);height:1px;border:none;margin:1rem 0}
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" role="navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item brand" href="../index.html">DEBUG Gym</a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
+                <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMain" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="./index.html">Dashboard</a>
+                <a class="navbar-item is-active" href="./rutinas.html">Rutinas</a>
+                <a class="navbar-item" href="./dietas.html">Nutrición</a>
+                <a class="navbar-item" href="./progreso.html">Progreso</a>
+                <a class="navbar-item" href="./pagos.html">Pagos</a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item"><span id="badgePlan" class="pill">—</span></div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title is-3">Rutinas</h1>
+        <p class="muted">Explora ejercicios estándar (API pública) y, si tienes <strong>El Gran Machote</strong> activo, verás tus rutinas personalizadas.</p>
+
+        <!-- Tabs -->
+        <div class="tabs is-toggle is-centered mt-4">
+            <ul>
+                <li class="is-active"><a data-tab="std">Estándar</a></li>
+                <li><a data-tab="pers">Personalizadas</a></li>
+                <li><a data-tab="local">Creador local</a></li>
+            </ul>
+        </div>
+
+        <!-- Estándar (API pública: WGER) -->
+        <div id="tab-std">
+            <div class="is-flex is-justify-content-space-between is-align-items-center mb-3">
+                <div class="is-flex is-align-items-center" style="gap:.5rem">
+                    <span class="badge">API pública: WGER</span>
+                    <span class="muted is-size-7">language=en | filtro por grupo muscular</span>
+                </div>
+                <div>
+                    <div class="select is-small">
+                        <select id="grupo">
+                            <option value="8">Abdominales</option>
+                            <option value="12">Bíceps</option>
+                            <option value="14">Gemelos</option>
+                            <option value="11">Espalda</option>
+                            <option value="9">Pecho</option>
+                            <option value="10">Hombros</option>
+                            <option value="13">Tríceps</option>
+                            <option value="7">Piernas</option>
+                        </select>
+                    </div>
+                    <button id="btnCargar" class="button is-small btn-accent ml-2">Cargar</button>
+                </div>
+            </div>
+
+            <div id="stdGrid" class="grid"></div>
+            <div id="stdEmpty" class="box-clean has-text-centered is-hidden">
+                <p class="muted">No se encontraron ejercicios. Cambia el grupo y vuelve a intentar.</p>
+            </div>
+        </div>
+
+        <!-- Personalizadas (Premium) -->
+        <div id="tab-pers" class="is-hidden">
+            <div id="persLock" class="cardx lock">
+                <div class="p-5 has-text-centered">
+                    <h3 class="title is-5">Rutinas personalizadas</h3>
+                    <p class="muted">Asignadas por tu instructor. Requiere <strong>Premium activo</strong>.</p>
+                </div>
+            </div>
+            <div id="persContent" class="is-hidden">
+                <div class="is-flex is-justify-content-space-between is-align-items-center">
+                    <h3 class="title is-5">Tu plan semanal</h3>
+                    <a class="button btn-ghost is-small" href="#">Actualizar</a>
+                </div>
+                <div id="persGrid" class="grid"></div>
+                <p class="muted is-size-7">* Datos de ejemplo (conecta tu API privada en producción).</p>
+            </div>
+        </div>
+
+        <!-- Creador local (Básico) -->
+        <div id="tab-local" class="is-hidden">
+            <div class="cardx p-5">
+                <h3 class="title is-5">Creador local</h3>
+                <p class="muted">Arma una rutina simple guardada en tu dispositivo. (No requiere internet)</p>
+                <hr>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label class="label">Ejercicio</label>
+                            <input id="exNombre" class="input" placeholder="Ej: Sentadillas">
+                        </div>
+                    </div>
+                    <div class="column is-3">
+                        <div class="field">
+                            <label class="label">Series</label>
+                            <input id="exSeries" type="number" class="input" min="1" value="3">
+                        </div>
+                    </div>
+                    <div class="column is-3">
+                        <div class="field">
+                            <label class="label">Reps</label>
+                            <input id="exReps" type="number" class="input" min="1" value="10">
+                        </div>
+                    </div>
+                    <div class="column is-narrow">
+                        <label class="label">&nbsp;</label>
+                        <button id="btnAgregar" class="button btn-accent">Agregar</button>
+                    </div>
+                </div>
+                <div id="localList" class="content"></div>
+                <div class="is-flex" style="gap:.5rem">
+                    <button id="btnGuardar" class="button btn-ghost">Guardar</button>
+                    <button id="btnLimpiar" class="button is-danger is-light">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    // --- Navbar burger
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgers=[...document.querySelectorAll('.navbar-burger')];
+        burgers.forEach(b=>b.addEventListener('click',()=>{const t=document.getElementById(b.dataset.target);b.classList.toggle('is-active');if(t)t.classList.toggle('is-active');}));
+    });
+
+    // --- Estado del usuario (demo)
+    const url = new URL(location.href);
+    const qPlan = url.searchParams.get('plan'); if(qPlan) localStorage.setItem('plan', qPlan);
+    const qVig  = url.searchParams.get('vigente'); if(qVig!==null) localStorage.setItem('vigente', qVig);
+    const plan = (localStorage.getItem('plan')||'basico').toLowerCase(); // basico | premium
+    const vigente = (localStorage.getItem('vigente')??'true')==='true';
+    document.getElementById('badgePlan').textContent = plan==='premium'?'El Gran Machote (Premium)':'Básico';
+
+    // --- Tabs
+    const tabs = document.querySelectorAll('.tabs a');
+    const panels = { std:document.getElementById('tab-std'), pers:document.getElementById('tab-pers'), local:document.getElementById('tab-local') };
+    tabs.forEach(a=>a.addEventListener('click',()=>{
+        tabs.forEach(x=>x.parentElement.classList.remove('is-active'));
+        a.parentElement.classList.add('is-active');
+        const t=a.dataset.tab;
+        Object.values(panels).forEach(p=>p.classList.add('is-hidden'));
+        panels[t].classList.remove('is-hidden');
+    }));
+
+    // --- Estándar (WGER API, sin key)
+    const stdGrid = document.getElementById('stdGrid');
+    const stdEmpty = document.getElementById('stdEmpty');
+    async function cargarEstandar(){
+        stdGrid.innerHTML = '';
+        const grupo = document.getElementById('grupo').value; // muscle id
+        try{
+            // Nota: language=2 = English (la API no tiene español completo), filtramos por músculo
+            const res = await fetch(`https://wger.de/api/v2/exerciseinfo/?language=2&muscles=${grupo}&limit=12`);
+            const data = await res.json();
+            if(!data.results?.length){ stdEmpty.classList.remove('is-hidden'); return; }
+            stdEmpty.classList.add('is-hidden');
+            const frag = document.createDocumentFragment();
+            data.results.forEach(e=>{
+                const img = (e?.images?.[0]?.image) || 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1200';
+                const div = document.createElement('div');
+                div.className='cardx tilex';
+                div.innerHTML = `
+        <figure class="image"><img class="thumb" src="${img}" alt="${e.name}"></figure>
+        <div class="p-4">
+          <h4 class="title is-6">${e.name}</h4>
+          <p class="muted is-size-7">${(e.description||'').replace(/<[^>]*>/g,'').slice(0,140)}...</p>
+          <hr>
+          <div class="is-flex is-flex-wrap-wrap" style="gap:.4rem">
+            ${(e.muscles||[]).map(m=>`<span class="badge">${m.name}</span>`).join('')}
+          </div>
+        </div>`;
+                frag.appendChild(div);
+            });
+            stdGrid.appendChild(frag);
+        }catch(err){
+            stdGrid.innerHTML = `<div class="box-clean has-text-centered"><p class="muted">Error cargando datos de la API pública.</p></div>`;
+        }
+    }
+    document.getElementById('btnCargar').addEventListener('click', cargarEstandar);
+    cargarEstandar();
+
+    // --- Personalizadas (solo premium vigente)
+    const persLock = document.getElementById('persLock');
+    const persContent = document.getElementById('persContent');
+    const persGrid = document.getElementById('persGrid');
+
+    function renderPersonalizadas(){
+        if(plan==='premium' && vigente){
+            persLock.classList.add('is-hidden');
+            persContent.classList.remove('is-hidden');
+            // Mock demo (conecta tu backend aquí)
+            const mock = [
+                {dia:'Lunes', bloques:['Pecho pesado','Tríceps accesorios','Core 10min']},
+                {dia:'Miércoles', bloques:['Espalda volumen','Bíceps','HIIT 12min']},
+                {dia:'Viernes', bloques:['Pierna fuerza','Glúteo','Core 10min']}
+            ];
+            persGrid.innerHTML = mock.map(x=>`
+      <div class="cardx p-4" style="grid-column:span 4">
+        <h4 class="title is-6">${x.dia}</h4>
+        <ul class="muted">
+          ${x.bloques.map(b=>`<li>• ${b}</li>`).join('')}
+        </ul>
+      </div>`).join('');
+        } else {
+            persLock.classList.remove('is-hidden');
+            persContent.classList.add('is-hidden');
+        }
+    }
+    renderPersonalizadas();
+
+    // --- Creador local (enfocado a básico, pero disponible para todos)
+    const exNombre = document.getElementById('exNombre');
+    const exSeries = document.getElementById('exSeries');
+    const exReps   = document.getElementById('exReps');
+    const localList= document.getElementById('localList');
+    let localRutina = JSON.parse(localStorage.getItem('rutinaLocal')||'[]');
+    function pintarLocal(){
+        if(!localRutina.length){ localList.innerHTML = '<p class="muted">Aún no has agregado ejercicios.</p>'; return; }
+        localList.innerHTML = `<ol>${localRutina.map(x=>`<li>${x.n} — ${x.s}x${x.r}</li>`).join('')}</ol>`;
+    }
+    document.getElementById('btnAgregar').addEventListener('click', ()=>{
+        const n=exNombre.value.trim(); const s=+exSeries.value; const r=+exReps.value;
+        if(!n||!s||!r) return;
+        localRutina.push({n,s,r});
+        pintarLocal();
+    });
+    document.getElementById('btnGuardar').addEventListener('click', ()=>{
+        localStorage.setItem('rutinaLocal', JSON.stringify(localRutina));
+        alert('Rutina local guardada.');
+    });
+    document.getElementById('btnLimpiar').addEventListener('click', ()=>{
+        localRutina=[]; pintarLocal();
+    });
+    pintarLocal();
+</script>
+</body>
+</html>

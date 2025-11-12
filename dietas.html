@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DEBUG Gym — Nutrición</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        :root{ --bg:#0a0a0e; --ink:#f2f2f2; --muted:#b7b7c2; --accent:#ffc107; --card:#111118; --line:#1b1b25; }
+        html,body{background:var(--bg);color:var(--ink)}
+        .navbar{background:#0b0b12;border-bottom:1px solid rgba(255,255,255,.06)}
+        .brand{color:var(--accent);font-weight:900;letter-spacing:.6px}
+        .section{padding:2.5rem 1.25rem}
+        .title,.subtitle{color:var(--ink)}
+        .muted{color:var(--muted)}
+        .cardx{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 28px rgba(0,0,0,.33);overflow:hidden}
+        .grid{display:grid;gap:1rem}
+        @media(min-width:769px){.grid{grid-template-columns:repeat(12,1fr)}}
+        .tilex{grid-column:span 4}
+        .thumb{width:100%;height:180px;object-fit:cover;background:#0d0d14}
+        .badge{display:inline-flex;gap:.4rem;border-radius:999px;padding:.35rem .7rem;font-weight:800;font-size:.8rem;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+        .lock{position:relative}
+        .lock::after{content:"🔒 Premium";position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.6);color:#fff;font-weight:900}
+        .btn-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:900;border-radius:12px}
+        .btn-ghost{background:transparent;border:2px solid var(--accent);color:var(--accent);font-weight:900;border-radius:12px}
+        .pill{border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem}
+        hr{background:var(--line);height:1px;border:none;margin:1rem 0}
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" role="navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item brand" href="../index.html">DEBUG Gym</a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMain">
+                <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navMain" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="./index.html">Dashboard</a>
+                <a class="navbar-item" href="./rutinas.html">Rutinas</a>
+                <a class="navbar-item is-active" href="./dietas.html">Nutrición</a>
+                <a class="navbar-item" href="./progreso.html">Progreso</a>
+                <a class="navbar-item" href="./pagos.html">Pagos</a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item"><span id="badgePlan" class="pill">—</span></div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="section">
+    <div class="container">
+        <h1 class="title is-3">Nutrición</h1>
+        <p class="muted">Recetas estándar de una API pública y, si tienes <strong>El Gran Machote</strong> activo, verás tu plan personalizado.</p>
+
+        <!-- Estándar (API pública: TheMealDB) -->
+        <div class="cardx p-4 mb-5">
+            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                <div class="is-flex" style="gap:.5rem">
+                    <span class="badge">API pública: TheMealDB</span>
+                    <span class="muted is-size-7">Recetas con imagen</span>
+                </div>
+                <div>
+                    <div class="select is-small">
+                        <select id="categoria">
+                            <option value="Beef">Beef</option>
+                            <option value="Chicken">Chicken</option>
+                            <option value="Seafood">Seafood</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Pasta">Pasta</option>
+                        </select>
+                    </div>
+                    <button id="btnBuscar" class="button is-small btn-accent ml-2">Buscar</button>
+                    <button id="btnRandom" class="button is-small btn-ghost ml-2">Sorpresa</button>
+                </div>
+            </div>
+            <hr>
+            <div id="stdMeals" class="grid"></div>
+            <div id="stdEmpty" class="box has-text-centered is-hidden" style="background:transparent;border:1px dashed var(--line)">
+                <p class="muted">Sin resultados. Prueba otra categoría.</p>
+            </div>
+        </div>
+
+        <!-- Personalizada (Premium) -->
+        <div id="persWrap" class="cardx">
+            <div id="persLock" class="lock">
+                <div class="p-5 has-text-centered">
+                    <h3 class="title is-5">Plan personalizado</h3>
+                    <p class="muted">Definido por tu nutriólogo. Requiere <strong>Premium activo</strong>.</p>
+                </div>
+            </div>
+            <div id="persContent" class="is-hidden p-5">
+                <div class="is-flex is-justify-content-space-between is-align-items-center">
+                    <h3 class="title is-5">Tu menú de hoy</h3>
+                    <div class="is-flex" style="gap:.5rem">
+                        <span class="badge">Calorías objetivo: 2000</span>
+                        <a class="button btn-ghost is-small" href="#">Actualizar</a>
+                    </div>
+                </div>
+                <div id="persMeals" class="grid"></div>
+                <p class="muted is-size-7">* Datos de ejemplo (conecta tu API privada en producción).</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    // --- Navbar burger
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgers=[...document.querySelectorAll('.navbar-burger')];
+        burgers.forEach(b=>b.addEventListener('click',()=>{const t=document.getElementById(b.dataset.target);b.classList.toggle('is-active');if(t)t.classList.toggle('is-active');}));
+    });
+
+    // --- Estado del usuario (demo)
+    const url = new URL(location.href);
+    const qPlan = url.searchParams.get('plan'); if(qPlan) localStorage.setItem('plan', qPlan);
+    const qVig  = url.searchParams.get('vigente'); if(qVig!==null) localStorage.setItem('vigente', qVig);
+    const plan = (localStorage.getItem('plan')||'basico').toLowerCase();
+    const vigente = (localStorage.getItem('vigente')??'true')==='true';
+    document.getElementById('badgePlan').textContent = plan==='premium'?'El Gran Machote (Premium)':'Básico';
+
+    // --- Estándar: TheMealDB (sin key)
+    const stdMeals = document.getElementById('stdMeals');
+    const stdEmpty = document.getElementById('stdEmpty');
+    async function buscarPorCategoria(cat){
+        stdMeals.innerHTML='';
+        try{
+            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(cat)}`);
+            const data = await res.json();
+            const meals = data.meals||[];
+            if(!meals.length){ stdEmpty.classList.remove('is-hidden'); return; }
+            stdEmpty.classList.add('is-hidden');
+            stdMeals.innerHTML = meals.slice(0,9).map(m=>`
+      <div class="cardx tilex">
+        <figure class="image"><img class="thumb" src="${m.strMealThumb}" alt="${m.strMeal}"></figure>
+        <div class="p-4">
+          <h4 class="title is-6">${m.strMeal}</h4>
+          <a class="button is-small btn-ghost mt-2" target="_blank" href="https://www.themealdb.com/meal/${m.idMeal}">Ver receta</a>
+        </div>
+      </div>`).join('');
+        }catch(e){
+            stdMeals.innerHTML = `<div class="box has-text-centered" style="background:transparent;border:1px dashed var(--line)"><p class="muted">Error con la API pública.</p></div>`;
+        }
+    }
+    async function recetaRandom(){
+        try{
+            const r = await fetch('https://www.themealdb.com/api/json/v1/1/random.php').then(x=>x.json());
+            const m = r.meals?.[0];
+            if(!m) return;
+            stdMeals.innerHTML = `
+      <div class="cardx tilex" style="grid-column:span 12">
+        <figure class="image"><img class="thumb" src="${m.strMealThumb}" alt="${m.strMeal}" style="height:300px"></figure>
+        <div class="p-4">
+          <h4 class="title is-5">${m.strMeal}</h4>
+          <a class="button btn-ghost" target="_blank" href="https://www.themealdb.com/meal/${m.idMeal}">Ver receta</a>
+        </div>
+      </div>`;
+        }catch(e){}
+    }
+    document.getElementById('btnBuscar').addEventListener('click',()=>buscarPorCategoria(document.getElementById('categoria').value));
+    document.getElementById('btnRandom').addEventListener('click',recetaRandom);
+    buscarPorCategoria('Chicken');
+
+    // --- Personalizada (solo premium vigente)
+    const persLock = document.getElementById('persLock');
+    const persContent = document.getElementById('persContent');
+    const persMeals = document.getElementById('persMeals');
+
+    function renderPersonalizada(){
+        if(plan==='premium' && vigente){
+            persLock.classList.add('is-hidden');
+            persContent.classList.remove('is-hidden');
+            // Mock (conecta tu backend aquí: macros, calorías, etc.)
+            const mock = [
+                {titulo:'Desayuno: Avena + Fruta + Yogur', kcal:500, img:'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&w=1200'},
+                {titulo:'Almuerzo: Pollo + Arroz + Ensalada', kcal:700, img:'https://images.pexels.com/photos/5938/food-chicken-meat-outdoors.jpg?auto=compress&cs=tinysrgb&w=1200'},
+                {titulo:'Cena: Salmón + Quinoa + Verduras', kcal:600, img:'https://images.pexels.com/photos/3296273/pexels-photo-3296273.jpeg?auto=compress&cs=tinysrgb&w=1200'}
+            ];
+            persMeals.innerHTML = mock.map(x=>`
+      <div class="cardx tilex">
+        <figure class="image"><img class="thumb" src="${x.img}" alt="${x.titulo}"></figure>
+        <div class="p-4">
+          <h4 class="title is-6">${x.titulo}</h4>
+          <span class="badge">${x.kcal} kcal</span>
+        </div>
+      </div>`).join('');
+        } else {
+            persLock.classList.remove('is-hidden');
+            persContent.classList.add('is-hidden');
+        }
+    }
+    renderPersonalizada();
+</script>
+</body>
+</html>
