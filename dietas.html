@@ -5,7 +5,7 @@
     <title>DEBUG Gym — Nutrición</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        :root{ --bg:#0a0a0e; --ink:#f2f2f2; --muted:#b7b7c2; --accent:#ffc107; --card:#111118; --line:#1b1b25; }
+        :root{ --bg:#0a0a0e; --ink:#f2f2f2; --muted:#b7b7c2; --accent:#ffc107; --card:#111118; --line:#1b1b25; --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444; }
         html,body{background:var(--bg);color:var(--ink)}
         .navbar{background:#0b0b12;border-bottom:1px solid rgba(255,255,255,.06)}
         .brand{color:var(--accent);font-weight:900;letter-spacing:.6px}
@@ -18,12 +18,25 @@
         .tilex{grid-column:span 4}
         .thumb{width:100%;height:180px;object-fit:cover;background:#0d0d14}
         .badge{display:inline-flex;gap:.4rem;border-radius:999px;padding:.35rem .7rem;font-weight:800;font-size:.8rem;border:1px solid var(--line);background:rgba(255,255,255,.02)}
-        .lock{position:relative}
-        .lock::after{content:"🔒 Premium";position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.6);color:#fff;font-weight:900}
-        .btn-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:900;border-radius:12px}
-        .btn-ghost{background:transparent;border:2px solid var(--accent);color:var(--accent);font-weight:900;border-radius:12px}
         .pill{border:1px solid var(--line);border-radius:999px;padding:.25rem .6rem}
         hr{background:var(--line);height:1px;border:none;margin:1rem 0}
+        .btn-accent{background:var(--accent);border-color:var(--accent);color:#151515;font-weight:900;border-radius:12px}
+        .btn-ghost{background:transparent;border:2px solid var(--accent);color:var(--accent);font-weight:900;border-radius:12px}
+
+        /* PREMIUM PANEL */
+        .premium-head{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+        .ribbon{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,193,7,.1);border:1px solid rgba(255,193,7,.45);color:var(--accent);font-weight:900;border-radius:10px;padding:.35rem .6rem}
+        .lock{position:relative;min-height:180px}
+        .lock::after{content:"🔒 Requiere Premium activo";position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.6);color:#fff;font-weight:900;letter-spacing:.5px}
+        .kpi{display:flex;gap:1rem;flex-wrap:wrap}
+        .kpi .boxk{background:#0e0e14;border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;min-width:140px}
+        .kpi b{color:var(--accent)}
+        .macros{display:grid;gap:.6rem;margin-top:1rem}
+        .macros .bar{height:10px;background:#0e0e14;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+        .macros .fill{height:100%;background:var(--accent)}
+        .week-grid{display:grid;gap:.8rem;margin-top:1rem}
+        @media(min-width:769px){.week-grid{grid-template-columns:repeat(3,1fr)}}
+        .meal-card .thumb{height:140px}
     </style>
 </head>
 <body>
@@ -55,20 +68,69 @@
 <section class="section">
     <div class="container">
         <h1 class="title is-3">Nutrición</h1>
-        <p class="muted">Recetas estándar de una API pública y, si tienes <strong>El Gran Machote</strong> activo, verás tu plan personalizado.</p>
+        <p class="muted">En **Básico** verás recetas estándar (API pública). Con **El Gran Machote** se desbloquea tu **Plan Personalizado** (metas, macros, menú y semana).</p>
 
-        <!-- Estándar (API pública: TheMealDB) -->
-        <div class="cardx p-4 mb-5">
-            <div class="is-flex is-justify-content-space-between is-align-items-center">
+        <!-- ====== BLOQUE PERSONALIZADO (Premium) ====== -->
+        <div id="persWrap" class="cardx p-5 mb-5">
+            <!-- Head -->
+            <div class="premium-head">
+                <div class="is-flex" style="gap:.6rem;align-items:center">
+                    <h3 class="title is-4" style="margin:0">Plan Personalizado</h3>
+                    <span id="ribbonPremium" class="ribbon is-hidden">⭐ El Gran Machote</span>
+                </div>
                 <div class="is-flex" style="gap:.5rem">
+                    <a id="btnSync" class="button btn-ghost is-small">Actualizar</a>
+                    <a id="btnDescargar" class="button btn-accent is-small">Descargar PDF</a>
+                </div>
+            </div>
+
+            <!-- Candado -->
+            <div id="persLock" class="lock"></div>
+
+            <!-- Contenido cuando está desbloqueado -->
+            <div id="persContent" class="is-hidden">
+                <!-- KPIs -->
+                <div class="kpi mt-4">
+                    <div class="boxk"><span class="muted is-size-7">Calorías objetivo</span><br><b id="kcalObj">— kcal</b></div>
+                    <div class="boxk"><span class="muted is-size-7">Distribución</span><br><b id="macroDist">—</b></div>
+                    <div class="boxk"><span class="muted is-size-7">Hidratación</span><br><b>2.0 L</b></div>
+                </div>
+
+                <!-- Macros bars -->
+                <div class="macros">
+                    <div><span class="muted is-size-7">Carbohidratos</span><div class="bar"><div id="carbsBar" class="fill" style="width:0%"></div></div></div>
+                    <div><span class="muted is-size-7">Proteínas</span><div class="bar"><div id="protBar" class="fill" style="width:0%"></div></div></div>
+                    <div><span class="muted is-size-7">Grasas</span><div class="bar"><div id="fatBar" class="fill" style="width:0%"></div></div></div>
+                </div>
+
+                <hr>
+
+                <!-- Menú del día -->
+                <h4 class="title is-5">Menú de hoy</h4>
+                <div id="persMeals" class="grid"></div>
+
+                <hr>
+
+                <!-- Semana -->
+                <h4 class="title is-5">Plan semanal</h4>
+                <div id="weekWrap" class="week-grid"></div>
+
+                <p class="muted is-size-7 mt-3">* Demo: estos datos son de ejemplo. En producción se cargan desde tu API privada del nutriólogo.</p>
+            </div>
+        </div>
+
+        <!-- ====== ESTÁNDAR (API Pública: TheMealDB) ====== -->
+        <div class="cardx p-4">
+            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                <div class="is-flex" style="gap:.5rem;align-items:center">
                     <span class="badge">API pública: TheMealDB</span>
                     <span class="muted is-size-7">Recetas con imagen</span>
                 </div>
                 <div>
                     <div class="select is-small">
                         <select id="categoria">
-                            <option value="Beef">Beef</option>
                             <option value="Chicken">Chicken</option>
+                            <option value="Beef">Beef</option>
                             <option value="Seafood">Seafood</option>
                             <option value="Vegetarian">Vegetarian</option>
                             <option value="Pasta">Pasta</option>
@@ -85,29 +147,22 @@
             </div>
         </div>
 
-        <!-- Personalizada (Premium) -->
-        <div id="persWrap" class="cardx">
-            <div id="persLock" class="lock">
-                <div class="p-5 has-text-centered">
-                    <h3 class="title is-5">Plan personalizado</h3>
-                    <p class="muted">Definido por tu nutriólogo. Requiere <strong>Premium activo</strong>.</p>
-                </div>
-            </div>
-            <div id="persContent" class="is-hidden p-5">
-                <div class="is-flex is-justify-content-space-between is-align-items-center">
-                    <h3 class="title is-5">Tu menú de hoy</h3>
-                    <div class="is-flex" style="gap:.5rem">
-                        <span class="badge">Calorías objetivo: 2000</span>
-                        <a class="button btn-ghost is-small" href="#">Actualizar</a>
-                    </div>
-                </div>
-                <div id="persMeals" class="grid"></div>
-                <p class="muted is-size-7">* Datos de ejemplo (conecta tu API privada en producción).</p>
-            </div>
-        </div>
-
     </div>
 </section>
+
+<!-- DEBUG SWITCH (opcional para pruebas rápidas) -->
+<style>
+    #dbgBar{position:fixed;right:12px;bottom:12px;z-index:9999;background:#111118;border:1px solid #1b1b25;border-radius:12px;padding:8px;display:flex;gap:6px}
+    #dbgBar button{border-radius:10px;border:2px solid #ffc107;background:transparent;color:#ffc107;font-weight:900;padding:6px 10px;cursor:pointer}
+    #dbgBar button:hover{background:#ffc107;color:#151515}
+    #dbgBar small{color:#b7b7c2;margin-right:6px;align-self:center}
+</style>
+<div id="dbgBar">
+    <small>Plan:</small>
+    <button type="button" id="dbgBasico">Básico</button>
+    <button type="button" id="dbgPremium">Premium</button>
+    <button type="button" id="dbgVencer" style="border-color:#ef4444;color:#ef4444">Vencer</button>
+</div>
 
 <script>
     // --- Navbar burger
@@ -120,11 +175,82 @@
     const url = new URL(location.href);
     const qPlan = url.searchParams.get('plan'); if(qPlan) localStorage.setItem('plan', qPlan);
     const qVig  = url.searchParams.get('vigente'); if(qVig!==null) localStorage.setItem('vigente', qVig);
-    const plan = (localStorage.getItem('plan')||'basico').toLowerCase();
+    const plan = (localStorage.getItem('plan')||'basico').toLowerCase(); // basico | premium
     const vigente = (localStorage.getItem('vigente')??'true')==='true';
     document.getElementById('badgePlan').textContent = plan==='premium'?'El Gran Machote (Premium)':'Básico';
 
-    // --- Estándar: TheMealDB (sin key)
+    // --- PREMIUM: bloquear/desbloquear
+    const persLock = document.getElementById('persLock');
+    const persContent = document.getElementById('persContent');
+    const ribbon = document.getElementById('ribbonPremium');
+    const kcalObj = document.getElementById('kcalObj');
+    const macroDist = document.getElementById('macroDist');
+    const carbsBar = document.getElementById('carbsBar');
+    const protBar  = document.getElementById('protBar');
+    const fatBar   = document.getElementById('fatBar');
+    const persMeals = document.getElementById('persMeals');
+    const weekWrap = document.getElementById('weekWrap');
+
+    function unlockPremium(){
+        persLock.classList.add('is-hidden');
+        persContent.classList.remove('is-hidden');
+        ribbon.classList.remove('is-hidden');
+
+        // MOCK de metas (sustituye por tu API privada)
+        const meta = { kcal: 2100, carbs: 45, prot: 30, fat: 25 }; // % macros
+        kcalObj.textContent = `${meta.kcal} kcal`;
+        macroDist.textContent = `${meta.carbs}% / ${meta.prot}% / ${meta.fat}%`;
+        carbsBar.style.width = meta.carbs + '%';
+        protBar.style.width  = meta.prot  + '%';
+        fatBar.style.width   = meta.fat   + '%';
+
+        // Menú del día (mock)
+        const menu = [
+            {titulo:'Desayuno: Avena + Yogur + Fruta', kcal:520, carbs:60, prot:25, fat:12, img:'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&w=1200'},
+            {titulo:'Almuerzo: Pollo + Arroz + Ensalada', kcal:710, carbs:55, prot:38, fat:18, img:'https://images.pexels.com/photos/5938/food-chicken-meat-outdoors.jpg?auto=compress&cs=tinysrgb&w=1200'},
+            {titulo:'Cena: Salmón + Quinoa + Verduras', kcal:650, carbs:35, prot:42, fat:24, img:'https://images.pexels.com/photos/3296273/pexels-photo-3296273.jpeg?auto=compress&cs=tinysrgb&w=1200'}
+        ];
+        persMeals.innerHTML = menu.map(m=>`
+    <div class="cardx tilex meal-card">
+      <figure class="image"><img class="thumb" src="${m.img}" alt="${m.titulo}"></figure>
+      <div class="p-4">
+        <h4 class="title is-6">${m.titulo}</h4>
+        <div class="is-flex is-flex-wrap-wrap" style="gap:.4rem">
+          <span class="badge">${m.kcal} kcal</span>
+          <span class="badge">C ${m.carbs}%</span>
+          <span class="badge">P ${m.prot}%</span>
+          <span class="badge">G ${m.fat}%</span>
+        </div>
+      </div>
+    </div>`).join('');
+
+        // Semana (mock)
+        const semana = [
+            {d:'Lunes',    m:'Déficit suave · 2,100 kcal'},
+            {d:'Martes',   m:'Mantenimiento · 2,300 kcal'},
+            {d:'Miércoles',m:'Déficit suave · 2,100 kcal'},
+            {d:'Jueves',   m:'Mantenimiento · 2,300 kcal'},
+            {d:'Viernes',  m:'Déficit suave · 2,100 kcal'},
+            {d:'Sábado',   m:'Libre controlado · 2,500 kcal'}
+        ];
+        weekWrap.innerHTML = semana.map(s=>`
+    <div class="cardx p-4">
+      <b>${s.d}</b><br><span class="muted is-size-7">${s.m}</span>
+    </div>`).join('');
+    }
+
+    function lockPremium(){
+        persLock.classList.remove('is-hidden');
+        persContent.classList.add('is-hidden');
+        ribbon.classList.add('is-hidden');
+    }
+    (plan==='premium' && vigente) ? unlockPremium() : lockPremium();
+
+    // --- Botones (demo)
+    document.getElementById('btnDescargar').addEventListener('click',()=>alert('En producción: descargar PDF del plan personalizado.'));
+    document.getElementById('btnSync').addEventListener('click',()=>alert('En producción: refrescar datos desde tu API privada.'));
+
+    // --- ESTÁNDAR: TheMealDB (sin key)
     const stdMeals = document.getElementById('stdMeals');
     const stdEmpty = document.getElementById('stdEmpty');
     async function buscarPorCategoria(cat){
@@ -166,35 +292,10 @@
     document.getElementById('btnRandom').addEventListener('click',recetaRandom);
     buscarPorCategoria('Chicken');
 
-    // --- Personalizada (solo premium vigente)
-    const persLock = document.getElementById('persLock');
-    const persContent = document.getElementById('persContent');
-    const persMeals = document.getElementById('persMeals');
-
-    function renderPersonalizada(){
-        if(plan==='premium' && vigente){
-            persLock.classList.add('is-hidden');
-            persContent.classList.remove('is-hidden');
-            // Mock (conecta tu backend aquí: macros, calorías, etc.)
-            const mock = [
-                {titulo:'Desayuno: Avena + Fruta + Yogur', kcal:500, img:'https://images.pexels.com/photos/1435895/pexels-photo-1435895.jpeg?auto=compress&cs=tinysrgb&w=1200'},
-                {titulo:'Almuerzo: Pollo + Arroz + Ensalada', kcal:700, img:'https://images.pexels.com/photos/5938/food-chicken-meat-outdoors.jpg?auto=compress&cs=tinysrgb&w=1200'},
-                {titulo:'Cena: Salmón + Quinoa + Verduras', kcal:600, img:'https://images.pexels.com/photos/3296273/pexels-photo-3296273.jpeg?auto=compress&cs=tinysrgb&w=1200'}
-            ];
-            persMeals.innerHTML = mock.map(x=>`
-      <div class="cardx tilex">
-        <figure class="image"><img class="thumb" src="${x.img}" alt="${x.titulo}"></figure>
-        <div class="p-4">
-          <h4 class="title is-6">${x.titulo}</h4>
-          <span class="badge">${x.kcal} kcal</span>
-        </div>
-      </div>`).join('');
-        } else {
-            persLock.classList.remove('is-hidden');
-            persContent.classList.add('is-hidden');
-        }
-    }
-    renderPersonalizada();
+    // --- DEBUG SWITCH
+    document.getElementById('dbgBasico').onclick = () => { localStorage.setItem('plan','basico'); localStorage.setItem('vigente','true'); location.reload(); };
+    document.getElementById('dbgPremium').onclick = () => { localStorage.setItem('plan','premium'); localStorage.setItem('vigente','true'); location.reload(); };
+    document.getElementById('dbgVencer').onclick = () => { localStorage.setItem('vigente','false'); location.reload(); };
 </script>
 </body>
 </html>
